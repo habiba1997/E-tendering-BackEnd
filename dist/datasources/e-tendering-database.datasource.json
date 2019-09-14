@@ -1,0 +1,11 @@
+{
+    "name": "eTenderingDatabase",
+    "connector": "mongodb",
+    "url": "",
+    "host": "localhost",
+    "port": 0,
+    "user": "",
+    "password": "",
+    "database": "eTenderingDatabase",
+    "useNewUrlParser": true
+}
