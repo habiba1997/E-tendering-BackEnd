@@ -1,8 +1,9 @@
 import { inject } from '@loopback/context';
 import { HttpErrors } from '@loopback/rest';
 import { promisify } from 'util';
-import { TokenService, UserProfile } from '@loopback/authentication';
+import { TokenService } from '@loopback/authentication';
 import { TokenServiceBindings } from '../keys';
+import { UserProfile } from '@loopback/security';
 
 const jwt = require('jsonwebtoken');
 const signAsync = promisify(jwt.sign);

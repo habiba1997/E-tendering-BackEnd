@@ -11,17 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-"use strict";
 const rest_1 = require("@loopback/rest");
 const repository_1 = require("@loopback/repository");
 const validator_1 = require("../services/validator");
 const models_1 = require("../models");
 const repositories_1 = require("../repositories");
 const core_1 = require("@loopback/core");
-const authentication_1 = require("@loopback/authentication");
-const user_controller_specs_1 = require("./specs/user-controller.specs");
 const keys_1 = require("../keys");
 const _ = require('lodash');
 let HospitalUserController = class HospitalUserController {
@@ -73,27 +69,6 @@ let HospitalUserController = class HospitalUserController {
     }
     async find(filter) {
         return this.userRepository.find(filter);
-    }
-    async printCurrentUser(currentUserProfile) {
-        return currentUserProfile;
-    }
-    async loginID(credentials) {
-        // ensure the user exists, and the password is correct
-        const user = await this.userService.verifyCredentials('hospital', credentials);
-        // convert a User object into a UserProfile object (reduced set of properties)
-        const userProfile = this.userService.convertToUserProfile(user);
-        // create a JSON Web Token based on the user profile
-        const token = await this.jwtService.generateToken(userProfile);
-        return { token };
-    }
-    async login(credentials) {
-        // ensure the user exists, and the password is correct
-        const user = await this.userService.verifyCredentials('hospital', credentials);
-        // convert a User object into a UserProfile object (reduced set of properties)
-        const userProfile = this.userService.convertToUserProfile(user);
-        // create a JSON Web Token based on the user profile
-        const token = await this.jwtService.generateToken(userProfile);
-        return { token };
     }
     async updateById(id, hospitalUser) {
         await this.userRepository.updateById(id, hospitalUser);
@@ -208,75 +183,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], HospitalUserController.prototype, "find", null);
-__decorate([
-    rest_1.get('/hospital-users/me', {
-        responses: {
-            '200': {
-                description: 'The current user profile',
-                content: {
-                    'application/json': {
-                        schema: { type: 'array', items: rest_1.getModelSchemaRef(models_1.HospitalUser) },
-                    },
-                },
-            },
-        },
-    }),
-    authentication_1.authenticate('jwt'),
-    __param(0, core_1.inject(authentication_1.AuthenticationBindings.CURRENT_USER)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_a = typeof authentication_1.UserProfile !== "undefined" && authentication_1.UserProfile) === "function" ? _a : Object]),
-    __metadata("design:returntype", Promise)
-], HospitalUserController.prototype, "printCurrentUser", null);
-__decorate([
-    rest_1.post('/hospital-users/login', {
-        responses: {
-            '200': {
-                description: 'Token',
-                content: {
-                    'application/json': {
-                        schema: {
-                            type: 'object',
-                            properties: {
-                                token: {
-                                    type: 'string',
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    }),
-    __param(0, rest_1.requestBody(user_controller_specs_1.CredentialsRequestBody)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], HospitalUserController.prototype, "loginID", null);
-__decorate([
-    rest_1.post('/hospital-users/login', {
-        responses: {
-            '200': {
-                description: 'Token',
-                content: {
-                    'application/json': {
-                        schema: {
-                            type: 'object',
-                            properties: {
-                                token: {
-                                    type: 'string',
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    }),
-    __param(0, rest_1.requestBody(user_controller_specs_1.CredentialsRequestBody)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], HospitalUserController.prototype, "login", null);
 __decorate([
     rest_1.patch('/hospital-users/{id}', {
         responses: {

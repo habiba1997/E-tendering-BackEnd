@@ -1,4 +1,5 @@
-import { TokenService, UserProfile } from '@loopback/authentication';
+import { TokenService } from '@loopback/authentication';
+import { UserProfile } from '@loopback/security';
 export declare class JWTService implements TokenService {
     private jwtSecret;
     private jwtExpiresIn;

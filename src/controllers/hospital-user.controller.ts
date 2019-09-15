@@ -19,9 +19,9 @@ import { validateCredentials } from '../services/validator';
 import { HospitalUser } from '../models';
 import { HospitalUserRepository } from '../repositories';
 import { inject } from '@loopback/core';
+import { UserProfile } from '@loopback/security';
 import {
   authenticate,
-  UserProfile,
   AuthenticationBindings,
   TokenService,
   UserService,
@@ -183,101 +183,6 @@ export class HospitalUserController {
 
     return this.userRepository.find(filter);
   }
-
-
-  @get('/hospital-users/me', {
-    responses: {
-      '200': {
-        description: 'The current user profile',
-        content: {
-          'application/json': {
-            schema: { type: 'array', items: getModelSchemaRef(HospitalUser) },
-          },
-        },
-      },
-    },
-  })
-  @authenticate('jwt')
-  async printCurrentUser(
-    @inject(AuthenticationBindings.CURRENT_USER)
-    currentUserProfile: UserProfile,
-  ): Promise<UserProfile> {
-    return currentUserProfile;
-  }
-
-
-
-
-  @post('/hospital-users/login', {
-    responses: {
-      '200': {
-        description: 'Token',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                token: {
-                  type: 'string',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  })
-  async loginID(
-    @requestBody(CredentialsRequestBody) credentials: Credentials,
-  ): Promise<{ token: string }> {
-    // ensure the user exists, and the password is correct
-    const user = await this.userService.verifyCredentials('hospital', credentials);
-
-    // convert a User object into a UserProfile object (reduced set of properties)
-    const userProfile = this.userService.convertToUserProfile(user);
-
-    // create a JSON Web Token based on the user profile
-    const token = await this.jwtService.generateToken(userProfile);
-
-    return { token };
-  }
-
-
-  @post('/hospital-users/login', {
-    responses: {
-      '200': {
-        description: 'Token',
-        content: {
-          'application/json': {
-            schema: {
-              type: 'object',
-              properties: {
-                token: {
-                  type: 'string',
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  })
-  async login(
-    @requestBody(CredentialsRequestBody) credentials: Credentials,
-  ): Promise<{ token: string }> {
-    // ensure the user exists, and the password is correct
-    const user = await this.userService.verifyCredentials('hospital', credentials);
-
-    // convert a User object into a UserProfile object (reduced set of properties)
-    const userProfile = this.userService.convertToUserProfile(user);
-
-    // create a JSON Web Token based on the user profile
-    const token = await this.jwtService.generateToken(userProfile);
-
-    return { token };
-  }
-
-
 
 
   @patch('/hospital-users/{id}', {
