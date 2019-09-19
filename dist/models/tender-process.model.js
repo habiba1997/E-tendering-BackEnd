@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let CompanyUser = class CompanyUser extends repository_1.Entity {
+let TenderProcess = class TenderProcess extends repository_1.Entity {
     constructor(data) {
         super(data);
     }
@@ -19,61 +19,62 @@ __decorate([
     repository_1.property({
         type: 'string',
         id: true,
+        generated: true,
     }),
     __metadata("design:type", String)
-], CompanyUser.prototype, "_id", void 0);
+], TenderProcess.prototype, "_id", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
-], CompanyUser.prototype, "name", void 0);
+], TenderProcess.prototype, "Issued_Hospital_ID", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
-], CompanyUser.prototype, "email", void 0);
+], TenderProcess.prototype, "Device_Name", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
-], CompanyUser.prototype, "password", void 0);
+], TenderProcess.prototype, "CountryOfOrigin", void 0);
+__decorate([
+    repository_1.property({
+        type: 'boolean',
+        required: true,
+    }),
+    __metadata("design:type", Boolean)
+], TenderProcess.prototype, "Direct_Process", void 0);
+__decorate([
+    repository_1.property({
+        type: 'boolean',
+    }),
+    __metadata("design:type", Boolean)
+], TenderProcess.prototype, "Open_Process", void 0);
+__decorate([
+    repository_1.property({
+        type: 'array',
+        itemType: 'string',
+        required: true,
+    }),
+    __metadata("design:type", Array)
+], TenderProcess.prototype, "Companies_Selected", void 0);
 __decorate([
     repository_1.property({
         type: 'array',
         itemType: 'string',
     }),
     __metadata("design:type", Array)
-], CompanyUser.prototype, "specificTenderingProcessesEntered", void 0);
-__decorate([
-    repository_1.property({
-        type: 'array',
-        itemType: 'string',
-    }),
-    __metadata("design:type", Array)
-], CompanyUser.prototype, "TenderingProcessesEntered", void 0);
-__decorate([
-    repository_1.property({
-        type: 'array',
-        itemType: 'string',
-    }),
-    __metadata("design:type", Array)
-], CompanyUser.prototype, "specificTenderingProcessesAccepted", void 0);
-__decorate([
-    repository_1.property({
-        type: 'array',
-        itemType: 'string',
-    }),
-    __metadata("design:type", Array)
-], CompanyUser.prototype, "TenderingProcessesAccepted", void 0);
-CompanyUser = __decorate([
+], TenderProcess.prototype, "Companies_Agreed", void 0);
+TenderProcess = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])
-], CompanyUser);
-exports.CompanyUser = CompanyUser;
-//# sourceMappingURL=company-user.model.js.map
+], TenderProcess);
+exports.TenderProcess = TenderProcess;
+//# sourceMappingURL=tender-process.model.js.map

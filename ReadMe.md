@@ -30,3 +30,11 @@ Will remove any changes that isn't committed and save them like on a shelf
 If you want those changes you type
 git stash apply
 ]
+
+#MONGO commandLine
+mongo 
+show databases
+use nameDB
+show collections
+db.Todo.find()
+db.collection.find().pretty()

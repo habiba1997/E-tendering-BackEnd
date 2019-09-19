@@ -6,6 +6,7 @@ import { TokenService, UserService } from '@loopback/authentication';
 import { HospitalUser, CompanyUser } from './models';
 import { Credentials } from './repositories/credentials-Interface';
 
+
 export namespace TokenServiceConstants {
   export const TOKEN_SECRET_VALUE = 'myjwts3cr3t';
   export const TOKEN_EXPIRES_IN_VALUE = '600';
@@ -34,4 +35,12 @@ export namespace UserServiceBindings {
   export const USER_SERVICE = BindingKey.create<UserService<HospitalUser | CompanyUser, Credentials>>(
     'services.user.service',
   );
-}
+  }
+
+
+/*export namespace ControllerBindings {
+    export const CONTROLLER_COMPANY = BindingKey.create<ControllerService>(
+      'services.user.service',
+      );
+}*/
+

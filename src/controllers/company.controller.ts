@@ -16,16 +16,11 @@ import {
 } from '@loopback/repository';
 import { validateCredentials } from '../services/validator';
 import { inject } from '@loopback/core';
-import { UserProfile } from '@loopback/security';
 import {
-  authenticate,
-  AuthenticationBindings,
   TokenService,
   UserService,
 } from '@loopback/authentication';
-import {
-  CredentialsRequestBody,
-} from './specs/user-controller.specs';
+
 import { Credentials } from '../repositories/credentials-Interface';
 import { PasswordHasher } from '../services/hash.password.bcryptjs';
 
@@ -36,12 +31,16 @@ import {
 } from '../keys';
 
 const _ = require('lodash');
-import { CompanyUser } from '../models';
-import { CompanyUserRepository } from '../repositories';
+import { CompanyUser, TenderProcess, TenderProcessRelations } from '../models';
+import { CompanyUserRepository, TenderProcessRepository } from '../repositories';
+import { TenderingProcessEnteredModel } from '../models/company-selected.model';
 
-export class CompanyController {
-
+export class CompanyController  {
+  
+  
   constructor(
+    @repository(TenderProcessRepository)
+    public tenderProcessRepository : TenderProcessRepository,
     @repository(CompanyUserRepository) public userRepository: CompanyUserRepository,
     @inject(PasswordHasherBindings.PASSWORD_HASHER)
     public passwordHasher: PasswordHasher,
@@ -64,28 +63,6 @@ export class CompanyController {
     });
     await this.userRepository.deleteById(id);
     return usr;
-  }
-
-  @patch('/company-users', {
-    responses: {
-      '200': {
-        description: 'User PATCH success count',
-        content: { 'application/json': { schema: CountSchema } },
-      },
-    },
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(CompanyUser, { partial: true }),
-        },
-      },
-    })
-    user: CompanyUser,
-    @param.query.object('where', getWhereSchemaFor(CompanyUser)) where?: Where<CompanyUser>,
-  ): Promise<Count> {
-    return this.userRepository.updateAll(user, where);
   }
 
   @post('/company-users', {
@@ -164,6 +141,8 @@ export class CompanyController {
     });
   }
 
+ 
+
   @get('/company-users', {
     responses: {
       '200': {
@@ -185,10 +164,11 @@ export class CompanyController {
 
 
 
+
   @patch('/company-users/{id}', {
     responses: {
       '204': {
-        description: 'CompanyUser PATCH success',
+        description: 'HospitalUser PATCH success',
       },
     },
   })
@@ -206,18 +186,79 @@ export class CompanyController {
     await this.userRepository.updateById(id, companyUser);
   }
 
-  @put('/company-users/{id}', {
+  findService(): Promise<CompanyUser[]> {
+
+    return this.userRepository.find();
+  }
+
+
+
+//get all tender process data objects using userId only
+ @get('/company-user-tender/{userId}', {
     responses: {
-      '204': {
-        description: 'CompanyUser PUT success',
+      '200': {
+        description: 'User',
+        content: {
+          'application/json': {
+            schema: { type: 'array', items: getModelSchemaRef(TenderProcess) },
+          },
+        },
       },
     },
   })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() companyUser: CompanyUser,
-  ): Promise<void> {
-    await this.userRepository.replaceById(id, companyUser);
+  async findByID(@param.path.string('userId') userId: string): Promise<TenderProcess[]> {
+    let user = this.userRepository.findById(userId, {
+      fields: { password: false },
+    });
+    let tenderList = (await user).TenderingProcessesEntered;
+    
+    var tenders =[];
+    if(!(tenderList==undefined))
+    {
+          for(var i =0; i < tenderList.length;++i)
+          {
+            let tender = await this.tenderProcessRepository.findById(tenderList[i])
+            if(!(tender == undefined)) tenders[i]=(tender);
+            else throw new HttpErrors.Conflict('tender process undefined');
+          }
+          
+        return tenders;
+
+    }
+    else{
+      throw new HttpErrors.Conflict('No tender Process');
+    }
   }
 
+
+  @patch('/user-tendersId/{id}', {
+    responses: {
+      '204': {
+        description: 'CompanyUser PATCH success',
+      },
+    },
+  })
+  async addTenderByUpdate(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(TenderingProcessEnteredModel, { partial: true }),
+        },
+      },
+    })
+    TenderingProcessEnteredModel: TenderingProcessEnteredModel,
+  ): Promise<any> {
+  
+    const user = this.userRepository.findById(id, {
+      fields: { password: false },
+    });
+  
+    let arr = (await user).TenderingProcessesEntered;
+  
+    if(!(arr==undefined)) arr.push(TenderingProcessEnteredModel.TenderingProcessEntered);
+    (await user).TenderingProcessesEntered = arr;
+    await this.userRepository.updateById(id, await user);
+  }
+  
 }

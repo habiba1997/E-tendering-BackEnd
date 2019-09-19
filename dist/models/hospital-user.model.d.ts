@@ -4,6 +4,7 @@ export declare class HospitalUser extends Entity {
     name: string;
     email: string;
     password: string;
+    TenderingProcessesCreated?: string[];
     [prop: string]: any;
     constructor(data?: Partial<HospitalUser>);
 }

@@ -5,4 +5,6 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./hospital-user.model"));
 __export(require("./company-user.model"));
+__export(require("./tender-process.model"));
+__export(require("./company-selected.model"));
 //# sourceMappingURL=index.js.map

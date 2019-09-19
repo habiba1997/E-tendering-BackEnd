@@ -21,4 +21,9 @@ var UserServiceBindings;
 (function (UserServiceBindings) {
     UserServiceBindings.USER_SERVICE = context_1.BindingKey.create('services.user.service');
 })(UserServiceBindings = exports.UserServiceBindings || (exports.UserServiceBindings = {}));
+/*export namespace ControllerBindings {
+    export const CONTROLLER_COMPANY = BindingKey.create<ControllerService>(
+      'services.user.service',
+      );
+}*/
 //# sourceMappingURL=keys.js.map

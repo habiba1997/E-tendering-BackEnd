@@ -14,3 +14,5 @@ export class CompanyUserRepository extends DefaultCrudRepository<
     super(CompanyUser, dataSource);
   }
 }
+/* @property.array(Product)
+  items: Product[];*/

@@ -16,16 +16,14 @@ const repository_1 = require("@loopback/repository");
 const models_1 = require("../models");
 const datasources_1 = require("../datasources");
 const core_1 = require("@loopback/core");
-let CompanyUserRepository = class CompanyUserRepository extends repository_1.DefaultCrudRepository {
+let TenderProcessRepository = class TenderProcessRepository extends repository_1.DefaultCrudRepository {
     constructor(dataSource) {
-        super(models_1.CompanyUser, dataSource);
+        super(models_1.TenderProcess, dataSource);
     }
 };
-CompanyUserRepository = __decorate([
+TenderProcessRepository = __decorate([
     __param(0, core_1.inject('datasources.eTenderingDatabase')),
     __metadata("design:paramtypes", [datasources_1.ETenderingDatabaseDataSource])
-], CompanyUserRepository);
-exports.CompanyUserRepository = CompanyUserRepository;
-/* @property.array(Product)
-  items: Product[];*/ 
-//# sourceMappingURL=company-user.repository.js.map
+], TenderProcessRepository);
+exports.TenderProcessRepository = TenderProcessRepository;
+//# sourceMappingURL=tender-process.repository.js.map

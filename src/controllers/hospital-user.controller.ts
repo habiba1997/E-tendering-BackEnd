@@ -66,7 +66,7 @@ export class HospitalUserController {
     await this.userRepository.deleteById(id);
     return usr;
   }
-
+/*
   @patch('/hospital-users', {
     responses: {
       '200': {
@@ -88,7 +88,7 @@ export class HospitalUserController {
   ): Promise<Count> {
     return this.userRepository.updateAll(user, where);
   }
-
+*/
   @post('/hospital-users', {
     responses: {
       '200': {
@@ -128,7 +128,7 @@ export class HospitalUserController {
       }
     }
   }
-
+/*
   @get('/hospital-users/count', {
     responses: {
       '200': {
@@ -143,7 +143,7 @@ export class HospitalUserController {
     return this.userRepository.count(where);
   }
 
-
+*/
 
   @get('/hospital-users/{userId}', {
     responses: {
@@ -205,7 +205,7 @@ export class HospitalUserController {
   ): Promise<void> {
     await this.userRepository.updateById(id, hospitalUser);
   }
-
+/*
   @put('/hospital-users/{id}', {
     responses: {
       '204': {
@@ -219,6 +219,6 @@ export class HospitalUserController {
   ): Promise<void> {
     await this.userRepository.replaceById(id, hospitalUser);
   }
-
+*/
 
 }

@@ -1,13 +1,8 @@
 {
-  "_id": "5d77d5788409d",
+  "_id": "5d77d5788409d0",
   "name": "Adam",
   "email": "AdamHospital@yahoo.com", 
   "password" : "AdamHospital"
 }
 
-{
-  "_id": "5d79fd64366604015ec237bd",
-  "name": "GE",
-  "email": "GE@gmail.com",
-  "password": "GEHospital"
-}
+

@@ -20,8 +20,10 @@ const keys_1 = require("../keys");
 const _ = require('lodash');
 const models_1 = require("../models");
 const repositories_1 = require("../repositories");
+const company_selected_model_1 = require("../models/company-selected.model");
 let CompanyController = class CompanyController {
-    constructor(userRepository, passwordHasher, jwtService, userService) {
+    constructor(tenderProcessRepository, userRepository, passwordHasher, jwtService, userService) {
+        this.tenderProcessRepository = tenderProcessRepository;
         this.userRepository = userRepository;
         this.passwordHasher = passwordHasher;
         this.jwtService = jwtService;
@@ -33,9 +35,6 @@ let CompanyController = class CompanyController {
         });
         await this.userRepository.deleteById(id);
         return usr;
-    }
-    async updateAll(user, where) {
-        return this.userRepository.updateAll(user, where);
     }
     async create(user) {
         // ensure a valid email value and password value
@@ -73,8 +72,39 @@ let CompanyController = class CompanyController {
     async updateById(id, companyUser) {
         await this.userRepository.updateById(id, companyUser);
     }
-    async replaceById(id, companyUser) {
-        await this.userRepository.replaceById(id, companyUser);
+    findService() {
+        return this.userRepository.find();
+    }
+    //get all tender process data objects using userId only
+    async findByID(userId) {
+        let user = this.userRepository.findById(userId, {
+            fields: { password: false },
+        });
+        let tenderList = (await user).TenderingProcessesEntered;
+        var tenders = [];
+        if (!(tenderList == undefined)) {
+            for (var i = 0; i < tenderList.length; ++i) {
+                let tender = await this.tenderProcessRepository.findById(tenderList[i]);
+                if (!(tender == undefined))
+                    tenders[i] = (tender);
+                else
+                    throw new rest_1.HttpErrors.Conflict('tender process undefined');
+            }
+            return tenders;
+        }
+        else {
+            throw new rest_1.HttpErrors.Conflict('No tender Process');
+        }
+    }
+    async addTenderByUpdate(id, TenderingProcessEnteredModel) {
+        const user = this.userRepository.findById(id, {
+            fields: { password: false },
+        });
+        let arr = (await user).TenderingProcessesEntered;
+        if (!(arr == undefined))
+            arr.push(TenderingProcessEnteredModel.TenderingProcessEntered);
+        (await user).TenderingProcessesEntered = arr;
+        await this.userRepository.updateById(id, await user);
     }
 };
 __decorate([
@@ -90,27 +120,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], CompanyController.prototype, "deleteById", null);
-__decorate([
-    rest_1.patch('/company-users', {
-        responses: {
-            '200': {
-                description: 'User PATCH success count',
-                content: { 'application/json': { schema: repository_1.CountSchema } },
-            },
-        },
-    }),
-    __param(0, rest_1.requestBody({
-        content: {
-            'application/json': {
-                schema: rest_1.getModelSchemaRef(models_1.CompanyUser, { partial: true }),
-            },
-        },
-    })),
-    __param(1, rest_1.param.query.object('where', rest_1.getWhereSchemaFor(models_1.CompanyUser))),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [models_1.CompanyUser, Object]),
-    __metadata("design:returntype", Promise)
-], CompanyController.prototype, "updateAll", null);
 __decorate([
     rest_1.post('/company-users', {
         responses: {
@@ -187,7 +196,7 @@ __decorate([
     rest_1.patch('/company-users/{id}', {
         responses: {
             '204': {
-                description: 'CompanyUser PATCH success',
+                description: 'HospitalUser PATCH success',
             },
         },
     }),
@@ -204,25 +213,51 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CompanyController.prototype, "updateById", null);
 __decorate([
-    rest_1.put('/company-users/{id}', {
+    rest_1.get('/company-user-tender/{userId}', {
+        responses: {
+            '200': {
+                description: 'User',
+                content: {
+                    'application/json': {
+                        schema: { type: 'array', items: rest_1.getModelSchemaRef(models_1.TenderProcess) },
+                    },
+                },
+            },
+        },
+    }),
+    __param(0, rest_1.param.path.string('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], CompanyController.prototype, "findByID", null);
+__decorate([
+    rest_1.patch('/user-tendersId/{id}', {
         responses: {
             '204': {
-                description: 'CompanyUser PUT success',
+                description: 'CompanyUser PATCH success',
             },
         },
     }),
     __param(0, rest_1.param.path.string('id')),
-    __param(1, rest_1.requestBody()),
+    __param(1, rest_1.requestBody({
+        content: {
+            'application/json': {
+                schema: rest_1.getModelSchemaRef(company_selected_model_1.TenderingProcessEnteredModel, { partial: true }),
+            },
+        },
+    })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, models_1.CompanyUser]),
+    __metadata("design:paramtypes", [String, company_selected_model_1.TenderingProcessEnteredModel]),
     __metadata("design:returntype", Promise)
-], CompanyController.prototype, "replaceById", null);
+], CompanyController.prototype, "addTenderByUpdate", null);
 CompanyController = __decorate([
-    __param(0, repository_1.repository(repositories_1.CompanyUserRepository)),
-    __param(1, core_1.inject(keys_1.PasswordHasherBindings.PASSWORD_HASHER)),
-    __param(2, core_1.inject(keys_1.TokenServiceBindings.TOKEN_SERVICE)),
-    __param(3, core_1.inject(keys_1.UserServiceBindings.USER_SERVICE)),
-    __metadata("design:paramtypes", [repositories_1.CompanyUserRepository, Object, Object, Object])
+    __param(0, repository_1.repository(repositories_1.TenderProcessRepository)),
+    __param(1, repository_1.repository(repositories_1.CompanyUserRepository)),
+    __param(2, core_1.inject(keys_1.PasswordHasherBindings.PASSWORD_HASHER)),
+    __param(3, core_1.inject(keys_1.TokenServiceBindings.TOKEN_SERVICE)),
+    __param(4, core_1.inject(keys_1.UserServiceBindings.USER_SERVICE)),
+    __metadata("design:paramtypes", [repositories_1.TenderProcessRepository,
+        repositories_1.CompanyUserRepository, Object, Object, Object])
 ], CompanyController);
 exports.CompanyController = CompanyController;
 //# sourceMappingURL=company.controller.js.map

@@ -34,9 +34,29 @@ let HospitalUserController = class HospitalUserController {
         await this.userRepository.deleteById(id);
         return usr;
     }
-    async updateAll(user, where) {
+    /*
+      @patch('/hospital-users', {
+        responses: {
+          '200': {
+            description: 'User PATCH success count',
+            content: { 'application/json': { schema: CountSchema } },
+          },
+        },
+      })
+      async updateAll(
+        @requestBody({
+          content: {
+            'application/json': {
+              schema: getModelSchemaRef(HospitalUser, { partial: true }),
+            },
+          },
+        })
+        user: HospitalUser,
+        @param.query.object('where', getWhereSchemaFor(HospitalUser)) where?: Where<HospitalUser>,
+      ): Promise<Count> {
         return this.userRepository.updateAll(user, where);
-    }
+      }
+    */
     async create(user) {
         // ensure a valid email value and password value
         validator_1.validateCredentials(_.pick(user, ['email', 'password']));
@@ -59,9 +79,22 @@ let HospitalUserController = class HospitalUserController {
             }
         }
     }
-    async count(where) {
+    /*
+      @get('/hospital-users/count', {
+        responses: {
+          '200': {
+            description: 'User model count',
+            content: { 'application/json': { schema: CountSchema } },
+          },
+        },
+      })
+      async count(
+        @param.query.object('where', getWhereSchemaFor(HospitalUser)) where?: Where<HospitalUser>,
+      ): Promise<Count> {
         return this.userRepository.count(where);
-    }
+      }
+    
+    */
     async findById(userId) {
         return this.userRepository.findById(userId, {
             fields: { password: false },
@@ -72,9 +105,6 @@ let HospitalUserController = class HospitalUserController {
     }
     async updateById(id, hospitalUser) {
         await this.userRepository.updateById(id, hospitalUser);
-    }
-    async replaceById(id, hospitalUser) {
-        await this.userRepository.replaceById(id, hospitalUser);
     }
 };
 __decorate([
@@ -90,27 +120,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], HospitalUserController.prototype, "deleteById", null);
-__decorate([
-    rest_1.patch('/hospital-users', {
-        responses: {
-            '200': {
-                description: 'User PATCH success count',
-                content: { 'application/json': { schema: repository_1.CountSchema } },
-            },
-        },
-    }),
-    __param(0, rest_1.requestBody({
-        content: {
-            'application/json': {
-                schema: rest_1.getModelSchemaRef(models_1.HospitalUser, { partial: true }),
-            },
-        },
-    })),
-    __param(1, rest_1.param.query.object('where', rest_1.getWhereSchemaFor(models_1.HospitalUser))),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [models_1.HospitalUser, Object]),
-    __metadata("design:returntype", Promise)
-], HospitalUserController.prototype, "updateAll", null);
 __decorate([
     rest_1.post('/hospital-users', {
         responses: {
@@ -131,20 +140,6 @@ __decorate([
     __metadata("design:paramtypes", [models_1.HospitalUser]),
     __metadata("design:returntype", Promise)
 ], HospitalUserController.prototype, "create", null);
-__decorate([
-    rest_1.get('/hospital-users/count', {
-        responses: {
-            '200': {
-                description: 'User model count',
-                content: { 'application/json': { schema: repository_1.CountSchema } },
-            },
-        },
-    }),
-    __param(0, rest_1.param.query.object('where', rest_1.getWhereSchemaFor(models_1.HospitalUser))),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], HospitalUserController.prototype, "count", null);
 __decorate([
     rest_1.get('/hospital-users/{userId}', {
         responses: {
@@ -203,20 +198,6 @@ __decorate([
     __metadata("design:paramtypes", [String, models_1.HospitalUser]),
     __metadata("design:returntype", Promise)
 ], HospitalUserController.prototype, "updateById", null);
-__decorate([
-    rest_1.put('/hospital-users/{id}', {
-        responses: {
-            '204': {
-                description: 'HospitalUser PUT success',
-            },
-        },
-    }),
-    __param(0, rest_1.param.path.string('id')),
-    __param(1, rest_1.requestBody()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, models_1.HospitalUser]),
-    __metadata("design:returntype", Promise)
-], HospitalUserController.prototype, "replaceById", null);
 HospitalUserController = __decorate([
     __param(0, repository_1.repository(repositories_1.HospitalUserRepository)),
     __param(1, core_1.inject(keys_1.PasswordHasherBindings.PASSWORD_HASHER)),

@@ -4,6 +4,10 @@ export declare class CompanyUser extends Entity {
     name: string;
     email: string;
     password: string;
+    specificTenderingProcessesEntered?: string[];
+    TenderingProcessesEntered?: string[];
+    specificTenderingProcessesAccepted?: string[];
+    TenderingProcessesAccepted?: string[];
     [prop: string]: any;
     constructor(data?: Partial<CompanyUser>);
 }

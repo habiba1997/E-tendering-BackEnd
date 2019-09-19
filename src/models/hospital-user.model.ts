@@ -26,6 +26,12 @@ export class HospitalUser extends Entity {
   })
   password: string;
 
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  TenderingProcessesCreated?: string[];
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

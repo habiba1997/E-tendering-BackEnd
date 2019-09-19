@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let HospitalUser = class HospitalUser extends repository_1.Entity {
+let TenderingProcessEnteredModel = class TenderingProcessEnteredModel extends repository_1.Model {
     constructor(data) {
         super(data);
     }
@@ -18,41 +18,13 @@ let HospitalUser = class HospitalUser extends repository_1.Entity {
 __decorate([
     repository_1.property({
         type: 'string',
-        id: true,
-    }),
-    __metadata("design:type", String)
-], HospitalUser.prototype, "_id", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
-], HospitalUser.prototype, "name", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true,
-    }),
-    __metadata("design:type", String)
-], HospitalUser.prototype, "email", void 0);
-__decorate([
-    repository_1.property({
-        type: 'string',
-        required: true,
-    }),
-    __metadata("design:type", String)
-], HospitalUser.prototype, "password", void 0);
-__decorate([
-    repository_1.property({
-        type: 'array',
-        itemType: 'string',
-    }),
-    __metadata("design:type", Array)
-], HospitalUser.prototype, "TenderingProcessesCreated", void 0);
-HospitalUser = __decorate([
+], TenderingProcessEnteredModel.prototype, "TenderingProcessEntered", void 0);
+TenderingProcessEnteredModel = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])
-], HospitalUser);
-exports.HospitalUser = HospitalUser;
-//# sourceMappingURL=hospital-user.model.js.map
+], TenderingProcessEnteredModel);
+exports.TenderingProcessEnteredModel = TenderingProcessEnteredModel;
+//# sourceMappingURL=company-selected.model.js.map

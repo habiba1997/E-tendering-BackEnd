@@ -1,4 +1,4 @@
-import { Entity, model, property } from '@loopback/repository';
+import { Entity, model, property, Model } from '@loopback/repository';
 
 @model({ settings: { strict: false } })
 export class CompanyUser extends Entity {
@@ -26,10 +26,31 @@ export class CompanyUser extends Entity {
   })
   password: string;
 
-  // Define well-known properties here
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  specificTenderingProcessesEntered?: string[];
+  
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  TenderingProcessesEntered?: string[];
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  specificTenderingProcessesAccepted?: string[];
+  
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  TenderingProcessesAccepted?: string[];
+
+
   [prop: string]: any;
 
   constructor(data?: Partial<CompanyUser>) {

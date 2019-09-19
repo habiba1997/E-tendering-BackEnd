@@ -6,4 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./hospital-user.controller"));
 __export(require("./company.controller"));
 __export(require("./user.controller"));
+__export(require("./tender-process.controller"));
 //# sourceMappingURL=index.js.map
