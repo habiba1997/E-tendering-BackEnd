@@ -100,8 +100,8 @@ let HospitalUserController = class HospitalUserController {
             fields: { password: false },
         });
     }
-    async find(filter) {
-        return this.userRepository.find(filter);
+    async find() {
+        return this.userRepository.find();
     }
     async updateById(id, hospitalUser) {
         await this.userRepository.updateById(id, hospitalUser);
@@ -173,9 +173,8 @@ __decorate([
             },
         },
     }),
-    __param(0, rest_1.param.query.object('filter', rest_1.getFilterSchemaFor(models_1.HospitalUser))),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], HospitalUserController.prototype, "find", null);
 __decorate([

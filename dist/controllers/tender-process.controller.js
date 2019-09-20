@@ -128,8 +128,8 @@ let TenderProcessController = class TenderProcessController {
         return this.tenderProcessRepository.count(where);
       }
     */
-    async find(filter) {
-        return this.tenderProcessRepository.find(filter);
+    async find() {
+        return this.tenderProcessRepository.find();
     }
     /*
       @patch('/tender-processes', {
@@ -211,9 +211,8 @@ __decorate([
             },
         },
     }),
-    __param(0, rest_1.param.query.object('filter', rest_1.getFilterSchemaFor(models_1.TenderProcess))),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], TenderProcessController.prototype, "find", null);
 __decorate([

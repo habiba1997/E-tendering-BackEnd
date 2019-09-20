@@ -26,9 +26,7 @@ import {
   TokenService,
   UserService,
 } from '@loopback/authentication';
-import {
-  CredentialsRequestBody,
-} from './specs/user-controller.specs';
+
 import { Credentials } from '../repositories/credentials-Interface';
 import { PasswordHasher } from '../services/hash.password.bcryptjs';
 
@@ -177,11 +175,9 @@ export class HospitalUserController {
       },
     },
   })
-  async find(
-    @param.query.object('filter', getFilterSchemaFor(HospitalUser)) filter?: Filter<HospitalUser>,
-  ): Promise<HospitalUser[]> {
+  async find(): Promise<HospitalUser[]> {
 
-    return this.userRepository.find(filter);
+    return this.userRepository.find();
   }
 
 

@@ -1,29 +1,22 @@
 import {
-  Count,
-  CountSchema,
-  Filter,
   repository,
-  Where,
 } from '@loopback/repository';
 import {
   post,
   param,
   get,
-  getFilterSchemaFor,
   getModelSchemaRef,
-  getWhereSchemaFor,
   patch,
   put,
   del,
   requestBody,
 } from '@loopback/rest';
-import {TenderProcess, TenderingProcessEnteredModel, CompanyUser} from '../models';
+import {TenderProcess, CompanyUser} from '../models';
 import {TenderProcessRepository, CompanyUserRepository, HospitalUserRepository} from '../repositories';
 
 
 
 export class TenderProcessController {
-  tenderId: TenderingProcessEnteredModel;
   constructor(
     @repository(HospitalUserRepository)
     public hospitalUserRepository : HospitalUserRepository,
@@ -195,10 +188,8 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
       },
     },
   })
-  async find(
-    @param.query.object('filter', getFilterSchemaFor(TenderProcess)) filter?: Filter<TenderProcess>,
-  ): Promise<TenderProcess[]> {
-    return this.tenderProcessRepository.find(filter);
+  async find(): Promise<TenderProcess[]> {
+    return this.tenderProcessRepository.find();
   }
 /*
   @patch('/tender-processes', {

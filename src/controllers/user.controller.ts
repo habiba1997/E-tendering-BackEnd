@@ -16,8 +16,8 @@ import {
     Where,
   } from '@loopback/repository';
   import { validateCredentials } from '../services/validator';
-  import { HospitalUser } from '../models';
-  import { HospitalUserRepository } from '../repositories';
+  import { HospitalUser, CompanyUser } from '../models';
+  import { HospitalUserRepository, CompanyUserRepository, TenderProcessRepository } from '../repositories';
   import { inject } from '@loopback/core';
   import { UserProfile } from '@loopback/security';
   import {
@@ -28,13 +28,11 @@ import {
   } from '@loopback/authentication';
   import {
     CredentialsRequestBody,
-  } from './specs/user-controller.specs';
+  } from './specs/user-controller.specs'
   import { Credentials } from '../repositories/credentials-Interface';
-  import { PasswordHasher } from '../services/hash.password.bcryptjs';
   
   import {
     TokenServiceBindings,
-    PasswordHasherBindings,
     UserServiceBindings,
   } from '../keys';
   
@@ -47,12 +45,15 @@ import {
       public jwtService: TokenService,
       @inject(UserServiceBindings.USER_SERVICE)
       public userService: UserService<HospitalUser, Credentials>,
-        /*
-      @repository(HospitalUserRepository) public userRepository: HospitalUserRepository,
-      @inject(PasswordHasherBindings.PASSWORD_HASHER)
-      public passwordHasher: PasswordHasher,
-      
-    */) { }
+        @repository(HospitalUserRepository)
+        public hospitalUserRepository : HospitalUserRepository,
+        @repository(CompanyUserRepository)
+        public companyUserRepository : CompanyUserRepository,
+        @repository(TenderProcessRepository)
+        public tenderProcessRepository : TenderProcessRepository,
+  
+    
+    ) { }
   
    
   
@@ -112,7 +113,35 @@ import {
   
       return { token };
     }
-  
+    
+    @del('/All', {
+      responses: {
+        '204': {
+          description: 'DELETE success',
+        },
+      },
+    })
+    async delete(): Promise<void> {
+      
+      let tenders = this.tenderProcessRepository.find();
+      (await tenders).forEach(tender => {
+        this.tenderProcessRepository.deleteById(tender._id);
+        
+      });
+      let usr = this.companyUserRepository.find();
+      (await usr).forEach(user => {
+        this.companyUserRepository.deleteById(user._id);
+        
+      });
+
+      let hosp = this.hospitalUserRepository.find();
+      (await hosp).forEach(hospUser => {
+        this.hospitalUserRepository.deleteById(hospUser._id);
+        
+      });
+
+
+    }
   
   
   }

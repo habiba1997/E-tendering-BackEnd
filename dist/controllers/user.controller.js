@@ -13,16 +13,21 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const rest_1 = require("@loopback/rest");
+const repository_1 = require("@loopback/repository");
 const models_1 = require("../models");
+const repositories_1 = require("../repositories");
 const core_1 = require("@loopback/core");
 const authentication_1 = require("@loopback/authentication");
 const user_controller_specs_1 = require("./specs/user-controller.specs");
 const keys_1 = require("../keys");
 const _ = require('lodash');
 let UserController = class UserController {
-    constructor(jwtService, userService) {
+    constructor(jwtService, userService, hospitalUserRepository, companyUserRepository, tenderProcessRepository) {
         this.jwtService = jwtService;
         this.userService = userService;
+        this.hospitalUserRepository = hospitalUserRepository;
+        this.companyUserRepository = companyUserRepository;
+        this.tenderProcessRepository = tenderProcessRepository;
     }
     async printCurrentUser(currentUserProfile) {
         return currentUserProfile;
@@ -35,6 +40,20 @@ let UserController = class UserController {
         // create a JSON Web Token based on the user profile
         const token = await this.jwtService.generateToken(userProfile);
         return { token };
+    }
+    async delete() {
+        let tenders = this.tenderProcessRepository.find();
+        (await tenders).forEach(tender => {
+            this.tenderProcessRepository.deleteById(tender._id);
+        });
+        let usr = this.companyUserRepository.find();
+        (await usr).forEach(user => {
+            this.companyUserRepository.deleteById(user._id);
+        });
+        let hosp = this.hospitalUserRepository.find();
+        (await hosp).forEach(hospUser => {
+            this.hospitalUserRepository.deleteById(hospUser._id);
+        });
     }
 };
 __decorate([
@@ -81,10 +100,27 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    rest_1.del('/All', {
+        responses: {
+            '204': {
+                description: 'DELETE success',
+            },
+        },
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "delete", null);
 UserController = __decorate([
     __param(0, core_1.inject(keys_1.TokenServiceBindings.TOKEN_SERVICE)),
     __param(1, core_1.inject(keys_1.UserServiceBindings.USER_SERVICE)),
-    __metadata("design:paramtypes", [Object, Object])
+    __param(2, repository_1.repository(repositories_1.HospitalUserRepository)),
+    __param(3, repository_1.repository(repositories_1.CompanyUserRepository)),
+    __param(4, repository_1.repository(repositories_1.TenderProcessRepository)),
+    __metadata("design:paramtypes", [Object, Object, repositories_1.HospitalUserRepository,
+        repositories_1.CompanyUserRepository,
+        repositories_1.TenderProcessRepository])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map
