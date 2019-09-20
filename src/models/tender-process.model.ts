@@ -5,7 +5,6 @@ export class TenderProcess extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: true,
   })
   _id?: string;
   

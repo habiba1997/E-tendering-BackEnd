@@ -9,7 +9,7 @@ export declare class TenderProcessController {
     NormaltenderEntered(user: CompanyUser, TenderProcessId: string): Promise<CompanyUser>;
     SpecifictenderEntered(user: CompanyUser, TenderProcessId: string): Promise<CompanyUser>;
     addTenderToHospitalByUserID(Userid: string, TenderProcessId: string): Promise<void>;
-    createTender(tenderProcess: Omit<TenderProcess, '_id'>): Promise<TenderProcess>;
+    createTender(tenderProcess: TenderProcess): Promise<TenderProcess>;
     find(): Promise<TenderProcess[]>;
     findById(id: string): Promise<TenderProcess>;
     updateById(id: string, tenderProcess: TenderProcess): Promise<void>;

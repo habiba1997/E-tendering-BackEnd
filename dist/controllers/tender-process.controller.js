@@ -190,12 +190,12 @@ __decorate([
     __param(0, rest_1.requestBody({
         content: {
             'application/json': {
-                schema: rest_1.getModelSchemaRef(models_1.TenderProcess, { exclude: ['_id'] }),
+                schema: rest_1.getModelSchemaRef(models_1.TenderProcess),
             },
         },
     })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [models_1.TenderProcess]),
     __metadata("design:returntype", Promise)
 ], TenderProcessController.prototype, "createTender", null);
 __decorate([

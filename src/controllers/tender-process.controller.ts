@@ -103,6 +103,8 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
     await this.hospitalUserRepository.updateById(Userid, await user);
   }
 
+
+
   @post('/tender-process', {
     responses: {
       '200': {
@@ -115,11 +117,11 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TenderProcess, {exclude: ['_id']}),
+          schema: getModelSchemaRef(TenderProcess),
         },
       },
     })
-    tenderProcess: Omit<TenderProcess, '_id'>,
+    tenderProcess: TenderProcess,
   ): Promise<TenderProcess> { 
    let companies = tenderProcess.Companies_Selected;
    const tender = this.tenderProcessRepository.create(tenderProcess);

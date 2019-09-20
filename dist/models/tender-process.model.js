@@ -19,7 +19,6 @@ __decorate([
     repository_1.property({
         type: 'string',
         id: true,
-        generated: true,
     }),
     __metadata("design:type", String)
 ], TenderProcess.prototype, "_id", void 0);
