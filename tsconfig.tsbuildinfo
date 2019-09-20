@@ -6741,6 +6741,7 @@
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/services/hash.password.bcryptjs.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/hospital-user.model.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/company-user.model.ts",
+      "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/tender-process.model.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/tenderAcceptance.model.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/index.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/repositories/credentials-Interface.ts",
@@ -6794,8 +6795,7 @@
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/glob/index.d.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/mocha/index.d.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/on-finished/index.d.ts",
-      "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/type-is/index.d.ts",
-      "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/tender-process.model.ts"
+      "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/type-is/index.d.ts"
     ]
   },
   "version": "3.5.3"
