@@ -237,44 +237,7 @@ export class CompanyController  {
   }
 
 
-/*
-//get all tender process data objects using userId only
- @get('/company-user-tender/{userId}', {
-    responses: {
-      '200': {
-        description: 'User',
-        content: {
-          'application/json': {
-            schema: { type: 'array', items: getModelSchemaRef(TenderProcess) },
-          },
-        },
-      },
-    },
-  })
-  async findByID(@param.path.string('userId') userId: string): Promise<TenderProcess[]> {
-    let user = this.userRepository.findById(userId, {
-      fields: { password: false },
-    });
-    let tenderList = (await user).TenderingProcessesEntered;
-    
-    var tenders =[];
-    if(!(tenderList==undefined))
-    {
-          for(var i =0; i < tenderList.length;++i)
-          {
-            let tender = await this.tenderProcessRepository.findById(tenderList[i])
-            if(!(tender == undefined)) tenders[i]=(tender);
-            else throw new HttpErrors.Conflict('tender process undefined');
-          }
-          
-        return tenders;
 
-    }
-    else{
-      throw new HttpErrors.Conflict('No tender Process');
-    }
-  }
-*/
 
 
   @post('/company-reject', {
