@@ -7,5 +7,6 @@
     "user": "",
     "password": "",
     "database": "eTenderingDatabase",
-    "useNewUrlParser": true
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true
 }

@@ -33,12 +33,13 @@ export class MyUserService implements UserService<HospitalUser | CompanyUser, Cr
     const foundHospitalUser = await this.hospitalUserRepository.findOne({
         where: { email: credentials.email },
       });
-
     if ((!foundCompanyUser) && (!foundHospitalUser)) {
       throw new HttpErrors.Unauthorized(invalidCredentialsError);
     }
     else if(foundCompanyUser)
-    {
+    {      
+      
+
       return this.createFoundUser(foundCompanyUser,credentials);
     }
     else if(foundHospitalUser)

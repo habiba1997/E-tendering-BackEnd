@@ -32,6 +32,7 @@ import {
 const _ = require('lodash');
 import { CompanyUser, TenderProcess, AcceptObject } from '../models';
 import { CompanyUserRepository, TenderProcessRepository } from '../repositories';
+import { CompaniesAcceptedTenderObject } from '../models/obj.model';
 
 export class CompanyController  {
   
@@ -175,7 +176,44 @@ export class CompanyController  {
     });
     return users;
 
+  }  
+  
+  @post('/company-submit/{tenderId}', {
+    responses: {
+      '200': {
+        description: 'User Submitted'
+      },
+    },
+  })
+  async submit(@param.path.string('tenderId') tenderId: string,
+  @requestBody({
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(CompaniesAcceptedTenderObject),
+      },
+    },
+  })
+  obj: CompaniesAcceptedTenderObject,
+  ): Promise<void> {
+    let tender = this.tenderProcessRepository.findById(tenderId);
+    let agreed = (await tender).Agreed;
+    if(agreed)
+    {
+      agreed.push(obj);
+    }
+    else
+    {
+      var arr =[];
+      arr.push(obj);
+      agreed = arr;
+    }
+    (await tender).Agreed = agreed;
+    this.tenderProcessRepository.updateById(tenderId, await tender);
+
   }
+  
+
+ 
 
 
 
@@ -246,6 +284,31 @@ export class CompanyController  {
     }
   }
 
+
+
+  @post('/company-reject', {
+    responses: {
+      '200': {
+        description: 'User',
+        content: { 'application/json': { schema: getModelSchemaRef(CompanyUser) } },
+      },
+    },
+  })
+  async postReject(@requestBody({
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(AcceptObject),
+      },
+    },
+  })
+  obj: AcceptObject,
+  ): Promise<void> {
+    //update tender process with accepted company Id
+    let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
+    let user = this.userRepository.findById(obj.CompanyUserId);
+    if((await tender).Direct_Process) this.deleteTenderIdFromSpecificEnteredArray(await user,obj)
+    else this.deleteTenderIdFromEnteredArray(await user,obj);
+  }
 
 
   @post('/company-accept', {

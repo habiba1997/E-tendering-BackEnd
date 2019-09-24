@@ -14,6 +14,13 @@
 }
 
 
+{
+  "_id": "5d8a6054dd5cc747d5b03186",
+  "name": "shrka",
+  "email": "shrka@gmail.com",
+"password": "password"
+}
+
 
 
 
@@ -50,4 +57,20 @@
     "5d7a06a61af41309a358ea74"
   ]
 }
-
+{
+  "_id": "5d8a660fef1a9949f5bf2794",
+"Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Device_Name": "MRI",
+  "CountryOfOrigin": "Egypt",
+  "Direct_Process": true,
+  "Open_Process": false,
+   "Companies_Selected": [
+    "5d81e9dbb635331fb81d1dec",
+    "5d7a06a61af41309a358ea74"
+  ],
+  "Agreed": [
+    {"companyId":"5d81e9dbb635331fb81d1dec",
+     "NumberOfFits":"6"
+}
+  ]
+}

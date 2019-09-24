@@ -11,6 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
 let TenderProcess = class TenderProcess extends repository_1.Entity {
+    /*  @property({
+      type: 'object',
+      required: true,
+    })
+    sd: object;*/
     constructor(data) {
         super(data);
     }
@@ -32,6 +37,12 @@ __decorate([
 __decorate([
     repository_1.property({
         type: 'string',
+    }),
+    __metadata("design:type", String)
+], TenderProcess.prototype, "Hospital_Name", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
@@ -43,6 +54,20 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], TenderProcess.prototype, "CountryOfOrigin", void 0);
+__decorate([
+    repository_1.property({
+        type: 'date',
+        required: true,
+    }),
+    __metadata("design:type", Date)
+], TenderProcess.prototype, "startDate", void 0);
+__decorate([
+    repository_1.property({
+        type: 'date',
+        required: true,
+    }),
+    __metadata("design:type", String)
+], TenderProcess.prototype, "deadlineDate", void 0);
 __decorate([
     repository_1.property({
         type: 'boolean',
@@ -71,6 +96,13 @@ __decorate([
     }),
     __metadata("design:type", Array)
 ], TenderProcess.prototype, "Companies_Agreed", void 0);
+__decorate([
+    repository_1.property({
+        type: 'array',
+        itemType: 'object',
+    }),
+    __metadata("design:type", Array)
+], TenderProcess.prototype, "Agreed", void 0);
 TenderProcess = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])

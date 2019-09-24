@@ -1,4 +1,5 @@
 import {Entity, model, property} from '@loopback/repository';
+import { CompaniesAcceptedTenderObject } from './obj.model';
 
 @model({settings: {strict: false}})
 export class TenderProcess extends Entity {
@@ -14,6 +15,11 @@ export class TenderProcess extends Entity {
   })
   Issued_Hospital_ID: string;
 
+  @property({
+    type: 'string',
+  })
+  Hospital_Name: string;
+
 
   @property({
     type: 'string',
@@ -27,6 +33,18 @@ export class TenderProcess extends Entity {
     required: true,
   })
   CountryOfOrigin: string;
+  
+  @property({
+    type: 'date',
+    required: true,
+  })
+  startDate: Date;
+  
+  @property({
+    type: 'date',
+    required: true,
+  })
+  deadlineDate: string;
 
 
   @property({
@@ -55,6 +73,20 @@ export class TenderProcess extends Entity {
   })
   Companies_Agreed?: string[];
 
+  @property({
+    type: 'array',
+    itemType: 'object',
+  })
+  Agreed?: CompaniesAcceptedTenderObject[];
+
+
+
+
+  /*  @property({
+    type: 'object',
+    required: true,
+  })
+  sd: object;*/
 
   constructor(data?: Partial<TenderProcess>) {
     super(data);

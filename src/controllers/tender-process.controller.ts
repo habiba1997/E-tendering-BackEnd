@@ -1,5 +1,5 @@
 import {
-  repository,
+  repository, NumberType,
 } from '@loopback/repository';
 import {
   post,
@@ -11,8 +11,9 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {TenderProcess, CompanyUser} from '../models';
+import {TenderProcess, CompanyUser, AcceptObject} from '../models';
 import {TenderProcessRepository, CompanyUserRepository, HospitalUserRepository} from '../repositories';
+import { CompaniesAcceptedTenderObject } from '../models/obj.model';
 
 
 
@@ -124,6 +125,8 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
     tenderProcess: TenderProcess,
   ): Promise<TenderProcess> { 
    let companies = tenderProcess.Companies_Selected;
+   let hospital = this.hospitalUserRepository.findById(tenderProcess.Issued_Hospital_ID);
+   tenderProcess.Hospital_Name = (await hospital).name;
    const tender = this.tenderProcessRepository.create(tenderProcess);
    let id = (await tender)._id;  
    
@@ -140,44 +143,7 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
   return tender;
   }
 
-/*
-  @post('/tender-processes', {
-    responses: {
-      '200': {
-        description: 'TenderProcess model instance',
-        content: {'application/json': {schema: getModelSchemaRef(TenderProcess)}},
-      },
-    },
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(TenderProcess, {exclude: ['_id']}),
-        },
-      },
-    })
-    tenderProcess: Omit<TenderProcess, '_id'>,
-  ): Promise<TenderProcess> {
-    return this.tenderProcessRepository.create(tenderProcess);
-  }
 
-
-
-  @get('/tender-processes/count', {
-    responses: {
-      '200': {
-        description: 'TenderProcess model count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async count(
-    @param.query.object('where', getWhereSchemaFor(TenderProcess)) where?: Where<TenderProcess>,
-  ): Promise<Count> {
-    return this.tenderProcessRepository.count(where);
-  }
-*/
   @get('/tender-processes', {
     responses: {
       '200': {
@@ -272,6 +238,28 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.tenderProcessRepository.deleteById(id);
+  }
+
+  @post('/tender-Agreed-property', {
+    responses: {
+      '200': {
+        description: 'Number of accepted items for User company',
+        content: { 'application/json': { schema: CompaniesAcceptedTenderObject } },
+      },
+    },
+  })
+  async getAgreedItemNumber(@requestBody({
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(AcceptObject),
+      },
+    },
+  })
+  obj: AcceptObject,
+  ): Promise<CompaniesAcceptedTenderObject[] | undefined> {
+    let tender =  this.tenderProcessRepository.findById(obj.TenderingProcessId);
+
+    return (await tender).Agreed;
   }
 
 

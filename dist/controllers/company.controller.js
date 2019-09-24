@@ -20,6 +20,7 @@ const keys_1 = require("../keys");
 const _ = require('lodash');
 const models_1 = require("../models");
 const repositories_1 = require("../repositories");
+const obj_model_1 = require("../models/obj.model");
 let CompanyController = class CompanyController {
     constructor(tenderProcessRepository, userRepository, passwordHasher, jwtService, userService) {
         this.tenderProcessRepository = tenderProcessRepository;
@@ -77,6 +78,20 @@ let CompanyController = class CompanyController {
         });
         return users;
     }
+    async submit(tenderId, obj) {
+        let tender = this.tenderProcessRepository.findById(tenderId);
+        let agreed = (await tender).Agreed;
+        if (agreed) {
+            agreed.push(obj);
+        }
+        else {
+            var arr = [];
+            arr.push(obj);
+            agreed = arr;
+        }
+        (await tender).Agreed = agreed;
+        this.tenderProcessRepository.updateById(tenderId, await tender);
+    }
     async updateById(id, companyUser) {
         await this.userRepository.updateById(id, companyUser);
     }
@@ -103,6 +118,15 @@ let CompanyController = class CompanyController {
         else {
             throw new rest_1.HttpErrors.Conflict('No tender Process');
         }
+    }
+    async postReject(obj) {
+        //update tender process with accepted company Id
+        let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
+        let user = this.userRepository.findById(obj.CompanyUserId);
+        if ((await tender).Direct_Process)
+            this.deleteTenderIdFromSpecificEnteredArray(await user, obj);
+        else
+            this.deleteTenderIdFromEnteredArray(await user, obj);
     }
     async postAcceptance(obj) {
         //update tender process with accepted company Id
@@ -273,6 +297,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CompanyController.prototype, "findNameObject", null);
 __decorate([
+    rest_1.post('/company-submit/{tenderId}', {
+        responses: {
+            '200': {
+                description: 'User Submitted'
+            },
+        },
+    }),
+    __param(0, rest_1.param.path.string('tenderId')),
+    __param(1, rest_1.requestBody({
+        content: {
+            'application/json': {
+                schema: rest_1.getModelSchemaRef(obj_model_1.CompaniesAcceptedTenderObject),
+            },
+        },
+    })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, obj_model_1.CompaniesAcceptedTenderObject]),
+    __metadata("design:returntype", Promise)
+], CompanyController.prototype, "submit", null);
+__decorate([
     rest_1.patch('/company-users/{id}', {
         responses: {
             '204': {
@@ -310,6 +354,26 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], CompanyController.prototype, "findByID", null);
+__decorate([
+    rest_1.post('/company-reject', {
+        responses: {
+            '200': {
+                description: 'User',
+                content: { 'application/json': { schema: rest_1.getModelSchemaRef(models_1.CompanyUser) } },
+            },
+        },
+    }),
+    __param(0, rest_1.requestBody({
+        content: {
+            'application/json': {
+                schema: rest_1.getModelSchemaRef(models_1.AcceptObject),
+            },
+        },
+    })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [models_1.AcceptObject]),
+    __metadata("design:returntype", Promise)
+], CompanyController.prototype, "postReject", null);
 __decorate([
     rest_1.post('/company-accept', {
         responses: {

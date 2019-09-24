@@ -16,6 +16,7 @@ const repository_1 = require("@loopback/repository");
 const rest_1 = require("@loopback/rest");
 const models_1 = require("../models");
 const repositories_1 = require("../repositories");
+const obj_model_1 = require("../models/obj.model");
 let TenderProcessController = class TenderProcessController {
     constructor(hospitalUserRepository, companyUserRepository, tenderProcessRepository) {
         this.hospitalUserRepository = hospitalUserRepository;
@@ -79,6 +80,8 @@ let TenderProcessController = class TenderProcessController {
     }
     async createTender(tenderProcess) {
         let companies = tenderProcess.Companies_Selected;
+        let hospital = this.hospitalUserRepository.findById(tenderProcess.Issued_Hospital_ID);
+        tenderProcess.Hospital_Name = (await hospital).name;
         const tender = this.tenderProcessRepository.create(tenderProcess);
         let id = (await tender)._id;
         if (!(id == undefined)) {
@@ -90,44 +93,6 @@ let TenderProcessController = class TenderProcessController {
         }
         return tender;
     }
-    /*
-      @post('/tender-processes', {
-        responses: {
-          '200': {
-            description: 'TenderProcess model instance',
-            content: {'application/json': {schema: getModelSchemaRef(TenderProcess)}},
-          },
-        },
-      })
-      async create(
-        @requestBody({
-          content: {
-            'application/json': {
-              schema: getModelSchemaRef(TenderProcess, {exclude: ['_id']}),
-            },
-          },
-        })
-        tenderProcess: Omit<TenderProcess, '_id'>,
-      ): Promise<TenderProcess> {
-        return this.tenderProcessRepository.create(tenderProcess);
-      }
-    
-    
-    
-      @get('/tender-processes/count', {
-        responses: {
-          '200': {
-            description: 'TenderProcess model count',
-            content: {'application/json': {schema: CountSchema}},
-          },
-        },
-      })
-      async count(
-        @param.query.object('where', getWhereSchemaFor(TenderProcess)) where?: Where<TenderProcess>,
-      ): Promise<Count> {
-        return this.tenderProcessRepository.count(where);
-      }
-    */
     async find() {
         return this.tenderProcessRepository.find();
     }
@@ -176,6 +141,10 @@ let TenderProcessController = class TenderProcessController {
     }
     async deleteById(id) {
         await this.tenderProcessRepository.deleteById(id);
+    }
+    async getAgreedItemNumber(obj) {
+        let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
+        return (await tender).Agreed;
     }
 };
 __decorate([
@@ -262,6 +231,26 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], TenderProcessController.prototype, "deleteById", null);
+__decorate([
+    rest_1.post('/tender-Agreed-property', {
+        responses: {
+            '200': {
+                description: 'Number of accepted items for User company',
+                content: { 'application/json': { schema: obj_model_1.CompaniesAcceptedTenderObject } },
+            },
+        },
+    }),
+    __param(0, rest_1.requestBody({
+        content: {
+            'application/json': {
+                schema: rest_1.getModelSchemaRef(models_1.AcceptObject),
+            },
+        },
+    })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [models_1.AcceptObject]),
+    __metadata("design:returntype", Promise)
+], TenderProcessController.prototype, "getAgreedItemNumber", null);
 TenderProcessController = __decorate([
     __param(0, repository_1.repository(repositories_1.HospitalUserRepository)),
     __param(1, repository_1.repository(repositories_1.CompanyUserRepository)),
