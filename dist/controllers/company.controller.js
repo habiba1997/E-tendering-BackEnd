@@ -30,9 +30,7 @@ let CompanyController = class CompanyController {
         this.userService = userService;
     }
     async deleteById(id) {
-        let usr = this.userRepository.findById(id, {
-            fields: { password: false },
-        });
+        let usr = this.userRepository.findById(id);
         await this.userRepository.deleteById(id);
         return usr;
     }

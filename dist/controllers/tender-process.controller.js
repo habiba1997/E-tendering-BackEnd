@@ -25,9 +25,8 @@ let TenderProcessController = class TenderProcessController {
     }
     //add tender process to user 
     async addTenderToCompanyByUserID(direct, Userid, TenderProcessId) {
-        let user = this.companyUserRepository.findById(Userid, {
-            fields: { password: false },
-        });
+        let user = this.companyUserRepository.findById(Userid);
+        console.log((await user).password);
         if (direct) {
             user = this.SpecifictenderEntered(await user, TenderProcessId);
         }
@@ -63,9 +62,7 @@ let TenderProcessController = class TenderProcessController {
         return user;
     }
     async addTenderToHospitalByUserID(Userid, TenderProcessId) {
-        const user = this.hospitalUserRepository.findById(Userid, {
-            fields: { password: false },
-        });
+        const user = this.hospitalUserRepository.findById(Userid);
         let arr = (await user).TenderingProcessesCreated;
         if (!(arr == undefined)) {
             arr.push(TenderProcessId);

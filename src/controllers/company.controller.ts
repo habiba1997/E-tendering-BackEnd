@@ -57,9 +57,7 @@ export class CompanyController  {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<CompanyUser> {
-    let usr = this.userRepository.findById(id, {
-      fields: { password: false },
-    });
+    let usr = this.userRepository.findById(id);
     await this.userRepository.deleteById(id);
     return usr;
   }
@@ -211,13 +209,6 @@ export class CompanyController  {
     this.tenderProcessRepository.updateById(tenderId, await tender);
 
   }
-  
-
- 
-
-
-
-
 
   @patch('/company-users/{id}', {
     responses: {
@@ -246,7 +237,7 @@ export class CompanyController  {
   }
 
 
-
+/*
 //get all tender process data objects using userId only
  @get('/company-user-tender/{userId}', {
     responses: {
@@ -283,7 +274,7 @@ export class CompanyController  {
       throw new HttpErrors.Conflict('No tender Process');
     }
   }
-
+*/
 
 
   @post('/company-reject', {

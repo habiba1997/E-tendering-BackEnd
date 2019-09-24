@@ -36,8 +36,11 @@
 {
   "_id": "5d83ecfd91fed14ee103b3ac",
   "Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Hospital_Name": "Adam",
   "Device_Name": "MRI",
   "CountryOfOrigin": "Egypt",
+  "startDate": "2019-09-24T20:32:04.264Z",
+  "deadlineDate": "2019-09-24T20:32:04.264Z",
   "Direct_Process": false,
   "Open_Process": false,
   "Companies_Selected": [
@@ -45,12 +48,14 @@
     "5d7a06a61af41309a358ea74"
   ]
 }
-
 {
   "_id": "5d84223fb2be635df7568a9c",
   "Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Hospital_Name": "Adam",
   "Device_Name": "Ventilator",
   "CountryOfOrigin": "Egypt",
+  "startDate": "2019-09-24T20:32:04.264Z",
+  "deadlineDate": "2019-09-24T20:32:04.264Z",
   "Direct_Process": true,
   "Open_Process": false,
   "Companies_Selected": [
@@ -59,18 +64,16 @@
 }
 {
   "_id": "5d8a660fef1a9949f5bf2794",
-"Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Hospital_Name": "Adam",
   "Device_Name": "MRI",
   "CountryOfOrigin": "Egypt",
+  "startDate": "2019-09-24T20:32:04.264Z",
+  "deadlineDate": "2019-09-24T20:32:04.264Z",
   "Direct_Process": true,
   "Open_Process": false,
-   "Companies_Selected": [
+  "Companies_Selected": [
     "5d81e9dbb635331fb81d1dec",
     "5d7a06a61af41309a358ea74"
-  ],
-  "Agreed": [
-    {"companyId":"5d81e9dbb635331fb81d1dec",
-     "NumberOfFits":"6"
-}
   ]
 }

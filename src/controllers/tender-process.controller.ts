@@ -31,9 +31,7 @@ export class TenderProcessController {
 //add tender process to user 
 async addTenderToCompanyByUserID(direct:boolean ,Userid: string, TenderProcessId:string) {
 
-  let user = this.companyUserRepository.findById(Userid, {
-    fields: { password: false },
-  });
+  let user = this.companyUserRepository.findById(Userid);
   if(direct)
   {
     user = this.SpecifictenderEntered(await user,TenderProcessId);
@@ -84,9 +82,7 @@ async SpecifictenderEntered(user:CompanyUser,TenderProcessId:string):Promise<Com
 }
 async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
   
-    const user = this.hospitalUserRepository.findById(Userid, {
-      fields: { password: false },
-    });
+    const user = this.hospitalUserRepository.findById(Userid);
   
     let arr = (await user).TenderingProcessesCreated;
   
