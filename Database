@@ -77,3 +77,10 @@
     "5d7a06a61af41309a358ea74"
   ]
 }
+
+
+company-submit Request Body: 
+ {
+    "companyId": "5d81e9dbb635331fb81d1dec",
+    "numberOfFits":"9"
+}
