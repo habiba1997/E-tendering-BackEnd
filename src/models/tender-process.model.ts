@@ -35,13 +35,13 @@ export class TenderProcess extends Entity {
   CountryOfOrigin: string;
   
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
-  startDate: Date;
+  startDate: string;
   
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   deadlineDate: string;
