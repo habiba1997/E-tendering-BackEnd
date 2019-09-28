@@ -10,14 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let CompaniesAcceptedTenderObject = class CompaniesAcceptedTenderObject extends repository_1.Model {
+let CompaniesSubmittedTenderObject = class CompaniesSubmittedTenderObject extends repository_1.Model {
     constructor(data) {
         super(data);
     }
 };
-CompaniesAcceptedTenderObject = __decorate([
+CompaniesSubmittedTenderObject = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])
-], CompaniesAcceptedTenderObject);
-exports.CompaniesAcceptedTenderObject = CompaniesAcceptedTenderObject;
+], CompaniesSubmittedTenderObject);
+exports.CompaniesSubmittedTenderObject = CompaniesSubmittedTenderObject;
 //# sourceMappingURL=obj.model.js.map

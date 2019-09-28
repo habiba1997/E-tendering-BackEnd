@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-let HospitalUser = class HospitalUser extends repository_1.Entity {
+let Diathermy = class Diathermy extends repository_1.Model {
     constructor(data) {
         super(data);
     }
@@ -18,48 +18,56 @@ let HospitalUser = class HospitalUser extends repository_1.Entity {
 __decorate([
     repository_1.property({
         type: 'string',
-        id: true,
+        required: true,
     }),
     __metadata("design:type", String)
-], HospitalUser.prototype, "_id", void 0);
+], Diathermy.prototype, "countryOfOrigin", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
-], HospitalUser.prototype, "name", void 0);
+], Diathermy.prototype, "polarity", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true,
+        default: "Open",
+    }),
+    __metadata("design:type", String)
+], Diathermy.prototype, "compatibility", void 0);
 __decorate([
     repository_1.property({
         type: 'string',
         required: true,
     }),
     __metadata("design:type", String)
-], HospitalUser.prototype, "email", void 0);
+], Diathermy.prototype, "alarm", void 0);
 __decorate([
     repository_1.property({
-        type: 'string',
+        type: 'number',
         required: true,
     }),
-    __metadata("design:type", String)
-], HospitalUser.prototype, "password", void 0);
+    __metadata("design:type", Number)
+], Diathermy.prototype, "powerRange", void 0);
 __decorate([
     repository_1.property({
-        type: 'array',
-        itemType: 'string',
+        type: 'number',
+        required: true,
     }),
-    __metadata("design:type", Array)
-], HospitalUser.prototype, "DevicesToProvide", void 0);
+    __metadata("design:type", Number)
+], Diathermy.prototype, "CogPowerRange", void 0);
 __decorate([
     repository_1.property({
-        type: 'array',
-        itemType: 'string',
+        type: 'boolean',
+        required: true,
     }),
-    __metadata("design:type", Array)
-], HospitalUser.prototype, "TenderingProcessesCreated", void 0);
-HospitalUser = __decorate([
+    __metadata("design:type", Boolean)
+], Diathermy.prototype, "FDACertified", void 0);
+Diathermy = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])
-], HospitalUser);
-exports.HospitalUser = HospitalUser;
-//# sourceMappingURL=hospital-user.model.js.map
+], Diathermy);
+exports.Diathermy = Diathermy;
+//# sourceMappingURL=diathermy.model.js.map

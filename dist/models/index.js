@@ -7,4 +7,5 @@ __export(require("./hospital-user.model"));
 __export(require("./company-user.model"));
 __export(require("./tender-process.model"));
 __export(require("./tenderAcceptance.model"));
+__export(require("./diathermy.model"));
 //# sourceMappingURL=index.js.map

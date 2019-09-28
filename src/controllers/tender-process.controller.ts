@@ -13,7 +13,7 @@ import {
 } from '@loopback/rest';
 import {TenderProcess, CompanyUser, AcceptObject} from '../models';
 import {TenderProcessRepository, CompanyUserRepository, HospitalUserRepository} from '../repositories';
-import { CompaniesAcceptedTenderObject } from '../models/obj.model';
+import { CompaniesSubmittedTenderObject } from '../models/obj.model';
 
 
 
@@ -240,7 +240,7 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
     responses: {
       '200': {
         description: 'Number of accepted items for User company',
-        content: { 'application/json': { schema: CompaniesAcceptedTenderObject } },
+        content: { 'application/json': { schema: CompaniesSubmittedTenderObject } },
       },
     },
   })
@@ -252,10 +252,10 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
     },
   })
   obj: AcceptObject,
-  ): Promise<CompaniesAcceptedTenderObject[] | undefined> {
+  ): Promise<CompaniesSubmittedTenderObject[] | undefined> {
     let tender =  this.tenderProcessRepository.findById(obj.TenderingProcessId);
 
-    return (await tender).Agreed;
+    return (await tender).Submitted;
   }
 
 

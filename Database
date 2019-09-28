@@ -84,3 +84,41 @@ company-submit Request Body:
     "companyId": "5d81e9dbb635331fb81d1dec",
     "numberOfFits":"9"
 }
+
+
+{
+
+  "Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Device_Name": "diathermy",
+  "Device_Data": {	
+        "countryOfOrigin":"London",
+        "polarity":"Mono",
+        "compatibility":"Open",
+        "alarm":"visibility",
+        "powerRange":300,
+        "CogPowerRange":60,
+        "FDACertified":true
+},
+  "startDate": "2019-09-24",
+  "deadlineDate": "2019-09-24",
+ "Direct_Process": true,
+  "Open_Process": false,
+  "Companies_Selected": [
+    "5d81e9dbb635331fb81d1dec"
+  ]
+
+
+}
+
+
+
+
+Object Tender Device_Data
+{	"countryOfOrigin":"string",
+	"polarity":"string",
+	"compatibility":"string",
+	"alarm":"string",
+	"powerRange":number,
+	"CogPowerRange": number,
+	"FDACertified":boolean
+}

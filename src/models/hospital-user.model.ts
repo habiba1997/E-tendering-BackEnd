@@ -25,6 +25,12 @@ export class HospitalUser extends Entity {
     required: true,
   })
   password: string;
+  
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  DevicesToProvide?: string[];
 
   @property({
     type: 'array',

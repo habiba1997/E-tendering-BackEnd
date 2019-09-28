@@ -32,7 +32,7 @@ import {
 const _ = require('lodash');
 import { CompanyUser, TenderProcess, AcceptObject } from '../models';
 import { CompanyUserRepository, TenderProcessRepository } from '../repositories';
-import { CompaniesAcceptedTenderObject } from '../models/obj.model';
+import { CompaniesSubmittedTenderObject } from '../models/obj.model';
 
 export class CompanyController  {
   
@@ -187,14 +187,14 @@ export class CompanyController  {
   @requestBody({
     content: {
       'application/json': {
-        schema: getModelSchemaRef(CompaniesAcceptedTenderObject),
+        schema: getModelSchemaRef(CompaniesSubmittedTenderObject),
       },
     },
   })
-  obj: CompaniesAcceptedTenderObject,
+  obj: CompaniesSubmittedTenderObject,
   ): Promise<void> {
     let tender = this.tenderProcessRepository.findById(tenderId);
-    let agreed = (await tender).Agreed;
+    let agreed = (await tender).Submitted;
     if(agreed)
     {
       agreed.push(obj);
@@ -205,7 +205,7 @@ export class CompanyController  {
       arr.push(obj);
       agreed = arr;
     }
-    (await tender).Agreed = agreed;
+    (await tender).Submitted = agreed;
     this.tenderProcessRepository.updateById(tenderId, await tender);
 
   }
@@ -368,10 +368,9 @@ export class CompanyController  {
       this.userRepository.updateById(obj.CompanyUserId, await user);
 
   }   
-
-
 /*
-  @patch('/user-tendersId/{id}', {
+
+  @patch('/user-tenders/{id}', {
     responses: {
       '204': {
         description: 'CompanyUser PATCH success',
@@ -380,25 +379,31 @@ export class CompanyController  {
   })
   async addTenderByUpdate(
     @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(TenderingProcessEnteredModel, { partial: true }),
-        },
-      },
-    })
-    TenderingProcessEnteredModel: TenderingProcessEnteredModel,
-  ): Promise<any> {
+   ){
   
     const user = this.userRepository.findById(id, {
       fields: { password: false },
     });
   
     let arr = (await user).TenderingProcessesEntered;
+    let directArr = (await user).specificTenderingProcessesEntered;
+
+    let tenders =[];
+
+    if(arr)
+      {
+
+      if(directArr) arr.concat(directArr);
+      
+        arr.forEach(element => {
+        tenders.push(this.tenderProcessRepository.findById(element));
+
+      });
+      
+    
+      }
+    
+    return tenders;
+  }*/
   
-    if(!(arr==undefined)) arr.push(TenderingProcessEnteredModel.TenderingProcessEntered);
-    (await user).TenderingProcessesEntered = arr;
-    await this.userRepository.updateById(id, await user);
-  }
-  */
 }

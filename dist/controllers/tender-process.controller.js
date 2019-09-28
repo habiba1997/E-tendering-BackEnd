@@ -26,7 +26,6 @@ let TenderProcessController = class TenderProcessController {
     //add tender process to user 
     async addTenderToCompanyByUserID(direct, Userid, TenderProcessId) {
         let user = this.companyUserRepository.findById(Userid);
-        console.log((await user).password);
         if (direct) {
             user = this.SpecifictenderEntered(await user, TenderProcessId);
         }
@@ -141,7 +140,7 @@ let TenderProcessController = class TenderProcessController {
     }
     async getAgreedItemNumber(obj) {
         let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
-        return (await tender).Agreed;
+        return (await tender).Submitted;
     }
 };
 __decorate([
@@ -233,7 +232,7 @@ __decorate([
         responses: {
             '200': {
                 description: 'Number of accepted items for User company',
-                content: { 'application/json': { schema: obj_model_1.CompaniesAcceptedTenderObject } },
+                content: { 'application/json': { schema: obj_model_1.CompaniesSubmittedTenderObject } },
             },
         },
     }),

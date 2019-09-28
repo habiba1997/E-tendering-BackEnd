@@ -1,6 +1,6 @@
 import { TenderProcess, CompanyUser, AcceptObject } from '../models';
 import { TenderProcessRepository, CompanyUserRepository, HospitalUserRepository } from '../repositories';
-import { CompaniesAcceptedTenderObject } from '../models/obj.model';
+import { CompaniesSubmittedTenderObject } from '../models/obj.model';
 export declare class TenderProcessController {
     hospitalUserRepository: HospitalUserRepository;
     companyUserRepository: CompanyUserRepository;
@@ -15,5 +15,5 @@ export declare class TenderProcessController {
     findById(id: string): Promise<TenderProcess>;
     updateById(id: string, tenderProcess: TenderProcess): Promise<void>;
     deleteById(id: string): Promise<void>;
-    getAgreedItemNumber(obj: AcceptObject): Promise<CompaniesAcceptedTenderObject[] | undefined>;
+    getAgreedItemNumber(obj: AcceptObject): Promise<CompaniesSubmittedTenderObject[] | undefined>;
 }
