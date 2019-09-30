@@ -30,7 +30,7 @@ import {
 } from '../keys';
 
 const _ = require('lodash');
-import { CompanyUser, TenderProcess, AcceptObject } from '../models';
+import { CompanyUser, TenderProcess } from '../models';
 import { CompanyUserRepository, TenderProcessRepository } from '../repositories';
 import { CompaniesSubmittedTenderObject } from '../models/obj.model';
 
@@ -176,40 +176,6 @@ export class CompanyController  {
 
   }  
   
-  @post('/company-submit/{tenderId}', {
-    responses: {
-      '200': {
-        description: 'User Submitted'
-      },
-    },
-  })
-  async submit(@param.path.string('tenderId') tenderId: string,
-  @requestBody({
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(CompaniesSubmittedTenderObject),
-      },
-    },
-  })
-  obj: CompaniesSubmittedTenderObject,
-  ): Promise<void> {
-    let tender = this.tenderProcessRepository.findById(tenderId);
-    let agreed = (await tender).Submitted;
-    if(agreed)
-    {
-      agreed.push(obj);
-    }
-    else
-    {
-      var arr =[];
-      arr.push(obj);
-      agreed = arr;
-    }
-    (await tender).Submitted = agreed;
-    this.tenderProcessRepository.updateById(tenderId, await tender);
-
-  }
-
   @patch('/company-users/{id}', {
     responses: {
       '204': {
@@ -251,52 +217,74 @@ export class CompanyController  {
   async postReject(@requestBody({
     content: {
       'application/json': {
-        schema: getModelSchemaRef(AcceptObject),
+        schema: getModelSchemaRef(CompaniesSubmittedTenderObject),
       },
     },
   })
-  obj: AcceptObject,
+  obj: CompaniesSubmittedTenderObject,
   ): Promise<void> {
     //update tender process with accepted company Id
-    let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
-    let user = this.userRepository.findById(obj.CompanyUserId);
+    let tender = this.tenderProcessRepository.findById(obj.tenderingProcessId);
+    let user = this.userRepository.findById(obj.companyId);
+    
     if((await tender).Direct_Process) this.deleteTenderIdFromSpecificEnteredArray(await user,obj)
     else this.deleteTenderIdFromEnteredArray(await user,obj);
   }
 
-
-  @post('/company-accept', {
+  @post('/company-submit', {
     responses: {
       '200': {
-        description: 'User',
-        content: { 'application/json': { schema: getModelSchemaRef(CompanyUser) } },
+        description: 'User Submitted'
       },
     },
   })
-  async postAcceptance(@requestBody({
+  async submit(
+  @requestBody({
     content: {
       'application/json': {
-        schema: getModelSchemaRef(AcceptObject),
+        schema: getModelSchemaRef(CompaniesSubmittedTenderObject),
       },
     },
   })
-  obj: AcceptObject,
+  obj: CompaniesSubmittedTenderObject,
   ): Promise<void> {
+    let tender = this.tenderProcessRepository.findById(obj.tenderingProcessId);
+    this.postAcceptance(obj,await tender);
+
+    let agreed = (await tender).Submitted;
+    if(agreed)
+    {
+      agreed.push(obj);
+    }
+    else
+    {
+      var arr =[];
+      arr.push(obj);
+      agreed = arr;
+    }
+    (await tender).Submitted = agreed;
+    this.tenderProcessRepository.updateById(obj.tenderingProcessId, await tender);
+
+  }
+
+
+
+
+  async postAcceptance(obj:CompaniesSubmittedTenderObject, tender:TenderProcess ): Promise<void> {
     //update tender process with accepted company Id
-    let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
     var arr = (await tender).Companies_Agreed;
     if(!(arr==undefined)) 
     {
-      arr.push(obj.CompanyUserId);
+      arr.push(obj.companyId);
       (await tender).Companies_Agreed = arr;
     }
     else
     {
       var array=[];
-      array.push(obj.CompanyUserId);
+      array.push(obj.companyId);
       (await tender).Companies_Agreed = array;
     }
-    this.tenderProcessRepository.updateById(obj.TenderingProcessId, await tender);
+    this.tenderProcessRepository.updateById(obj.tenderingProcessId, await tender);
     
     if((await tender).Direct_Process) this.directUpdateCompanyWithAcceptedTenderProcess(obj);
     else this.updateCompanyWithAcceptedTenderProcess(obj);
@@ -311,61 +299,61 @@ export class CompanyController  {
     return array;
   }
 
-  async updateCompanyWithAcceptedTenderProcess(obj:AcceptObject)
+  async updateCompanyWithAcceptedTenderProcess(obj:CompaniesSubmittedTenderObject)
     {
-        const user = this.userRepository.findById(obj.CompanyUserId);
+        const user = this.userRepository.findById(obj.companyId);
         var arr = (await user).TenderingProcessesAccepted;
         if(!(arr==undefined)) 
         {
-          arr.push(obj.TenderingProcessId);
+          arr.push(obj.tenderingProcessId);
           (await user).TenderingProcessesAccepted = arr;
         }
         else{
           var array=[];
-          array.push(obj.TenderingProcessId);
+          array.push(obj.tenderingProcessId);
           (await user).TenderingProcessesAccepted = array;
         }
         this.deleteTenderIdFromEnteredArray(await user,obj);
 
     } 
-    async directUpdateCompanyWithAcceptedTenderProcess(obj:AcceptObject)
+    async directUpdateCompanyWithAcceptedTenderProcess(obj:CompaniesSubmittedTenderObject)
     {
-        const user = this.userRepository.findById(obj.CompanyUserId);
+        const user = this.userRepository.findById(obj.companyId);
         var arr = (await user).specificTenderingProcessesAccepted;
         if(!(arr==undefined)) 
         {
-          arr.push(obj.TenderingProcessId);
+          arr.push(obj.tenderingProcessId);
           (await user).specificTenderingProcessesAccepted = arr;
         }
         else{
           var array=[];
-          array.push(obj.TenderingProcessId);
+          array.push(obj.tenderingProcessId);
           (await user).specificTenderingProcessesAccepted = array;
         }
         this.deleteTenderIdFromSpecificEnteredArray(await user,obj)
 
     } 
  
-  async deleteTenderIdFromEnteredArray(user: CompanyUser,obj:AcceptObject)
+  async deleteTenderIdFromEnteredArray(user: CompanyUser,obj:CompaniesSubmittedTenderObject)
   {
       let arr = (await user).TenderingProcessesEntered
-      if(!(arr==undefined))  arr = this.remove(arr,obj.TenderingProcessId);
+      if(!(arr==undefined))  arr = this.remove(arr,obj.tenderingProcessId);
       else  throw new HttpErrors.Conflict('delete problem');
 
       (await user).TenderingProcessesEntered = arr;
 
-      this.userRepository.updateById(obj.CompanyUserId, await user);
+      this.userRepository.updateById(obj.companyId, await user);
 
   } 
   
-  async deleteTenderIdFromSpecificEnteredArray(user: CompanyUser,obj:AcceptObject)
+  async deleteTenderIdFromSpecificEnteredArray(user: CompanyUser,obj:CompaniesSubmittedTenderObject)
   {
       let arr = (await user).specificTenderingProcessesEntered
-      if(!(arr==undefined))  arr = this.remove(arr,obj.TenderingProcessId);
+      if(!(arr==undefined))  arr = this.remove(arr,obj.tenderingProcessId);
       else  throw new HttpErrors.Conflict('delete problem');
       (await user).specificTenderingProcessesEntered = arr;
 
-      this.userRepository.updateById(obj.CompanyUserId, await user);
+      this.userRepository.updateById(obj.companyId, await user);
 
   }   
 /*

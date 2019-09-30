@@ -2,7 +2,7 @@ import { Count, Where } from '@loopback/repository';
 import { TokenService, UserService } from '@loopback/authentication';
 import { Credentials } from '../repositories/credentials-Interface';
 import { PasswordHasher } from '../services/hash.password.bcryptjs';
-import { CompanyUser, AcceptObject } from '../models';
+import { CompanyUser, TenderProcess } from '../models';
 import { CompanyUserRepository, TenderProcessRepository } from '../repositories';
 import { CompaniesSubmittedTenderObject } from '../models/obj.model';
 export declare class CompanyController {
@@ -18,15 +18,14 @@ export declare class CompanyController {
     findById(userId: string): Promise<CompanyUser>;
     find(): Promise<CompanyUser[]>;
     findNameObject(): Promise<CompanyUser[]>;
-    submit(tenderId: string, obj: CompaniesSubmittedTenderObject): Promise<void>;
     updateById(id: string, companyUser: CompanyUser): Promise<void>;
     findService(): Promise<CompanyUser[]>;
-    postReject(obj: AcceptObject): Promise<void>;
-    postAcceptance(obj: AcceptObject): Promise<void>;
+    postReject(obj: CompaniesSubmittedTenderObject): Promise<void>;
+    submit(obj: CompaniesSubmittedTenderObject): Promise<void>;
+    postAcceptance(obj: CompaniesSubmittedTenderObject, tender: TenderProcess): Promise<void>;
     remove(array: string[], removedObject: string): string[];
-    updateCompanyWithAcceptedTenderProcess(obj: AcceptObject): Promise<void>;
-    directUpdateCompanyWithAcceptedTenderProcess(obj: AcceptObject): Promise<void>;
-    deleteTenderIdFromEnteredArray(user: CompanyUser, obj: AcceptObject): Promise<void>;
-    deleteTenderIdFromSpecificEnteredArray(user: CompanyUser, obj: AcceptObject): Promise<void>;
-    addTenderByUpdate(id: string): Promise<any[]>;
+    updateCompanyWithAcceptedTenderProcess(obj: CompaniesSubmittedTenderObject): Promise<void>;
+    directUpdateCompanyWithAcceptedTenderProcess(obj: CompaniesSubmittedTenderObject): Promise<void>;
+    deleteTenderIdFromEnteredArray(user: CompanyUser, obj: CompaniesSubmittedTenderObject): Promise<void>;
+    deleteTenderIdFromSpecificEnteredArray(user: CompanyUser, obj: CompaniesSubmittedTenderObject): Promise<void>;
 }

@@ -15,6 +15,27 @@ let CompaniesSubmittedTenderObject = class CompaniesSubmittedTenderObject extend
         super(data);
     }
 };
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true,
+    }),
+    __metadata("design:type", String)
+], CompaniesSubmittedTenderObject.prototype, "companyId", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
+        required: true,
+    }),
+    __metadata("design:type", String)
+], CompaniesSubmittedTenderObject.prototype, "tenderingProcessId", void 0);
+__decorate([
+    repository_1.property({
+        type: 'number',
+        required: true,
+    }),
+    __metadata("design:type", Number)
+], CompaniesSubmittedTenderObject.prototype, "numberOfFits", void 0);
 CompaniesSubmittedTenderObject = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])
