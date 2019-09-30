@@ -122,3 +122,21 @@ Object Tender Device_Data
 	"CogPowerRange": number,
 	"FDACertified":boolean
 }
+
+http://localhost:3000/all-tender-processes
+[
+  {
+    "_id": "5d83ecfd91fed14ee103b3ac"
+  },
+  {
+    "_id": "5d84223fb2be635df7568a9c"
+  },
+  {
+    "_id": "5d8fe31a17a00768de241142"
+  },
+  {
+    "_id": "5d9164f0e7b87a3f9de48a91"
+  }
+
+
+]

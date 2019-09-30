@@ -14,6 +14,8 @@ import {
 import {TenderProcess, CompanyUser, AcceptObject} from '../models';
 import {TenderProcessRepository, CompanyUserRepository, HospitalUserRepository} from '../repositories';
 import { CompaniesSubmittedTenderObject } from '../models/obj.model';
+import { TenderArray } from '../models/tender-array.model';
+import { TenderProcessArray } from '../models/tender-process-array.model';
 
 
 
@@ -155,6 +157,49 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
   async find(): Promise<TenderProcess[]> {
     return this.tenderProcessRepository.find();
   }
+
+ tenderss:TenderProcessArray;
+
+
+  @post('/all-tender-processes', {
+    responses: {
+      '200': {
+        description: 'Get Array of TenderProcess model instances',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(TenderArray)},
+          },
+        },
+      },
+    },
+  })
+  async findAllTenderArray(@requestBody({
+    content: {
+      'application/json': {
+        schema: {type: 'array', items: getModelSchemaRef(TenderProcess,{partial: true})},
+      },
+    },
+  })
+
+  arr: TenderProcess[],
+): Promise<TenderProcess[]> {
+
+
+  for(var i =0 ; i < arr.length; ++i)
+      { 
+        let tender =await this.tenderProcessRepository.findById(arr[i]._id)
+    
+        if(!(tender==undefined)){          
+            
+              arr[i]= tender;
+        }
+  
+      }
+
+        return  arr;
+  }
+
+
 /*
   @patch('/tender-processes', {
     responses: {

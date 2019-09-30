@@ -8,4 +8,6 @@ __export(require("./company-user.model"));
 __export(require("./tender-process.model"));
 __export(require("./tenderAcceptance.model"));
 __export(require("./diathermy.model"));
+__export(require("./tender-array.model"));
+__export(require("./tender-process-array.model"));
 //# sourceMappingURL=index.js.map

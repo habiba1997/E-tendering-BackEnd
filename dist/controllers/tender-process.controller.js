@@ -17,6 +17,7 @@ const rest_1 = require("@loopback/rest");
 const models_1 = require("../models");
 const repositories_1 = require("../repositories");
 const obj_model_1 = require("../models/obj.model");
+const tender_array_model_1 = require("../models/tender-array.model");
 let TenderProcessController = class TenderProcessController {
     constructor(hospitalUserRepository, companyUserRepository, tenderProcessRepository) {
         this.hospitalUserRepository = hospitalUserRepository;
@@ -91,6 +92,16 @@ let TenderProcessController = class TenderProcessController {
     }
     async find() {
         return this.tenderProcessRepository.find();
+    }
+    async findAllTenderArray(arr) {
+        //let arrs :TenderProcess[];
+        for (var i = 0; i < arr.length; ++i) {
+            let tender = await this.tenderProcessRepository.findById(arr[i]._id);
+            if (!(tender == undefined)) {
+                arr[i] = tender;
+            }
+        }
+        return arr;
     }
     /*
       @patch('/tender-processes', {
@@ -180,6 +191,30 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], TenderProcessController.prototype, "find", null);
+__decorate([
+    rest_1.post('/all-tender-processes', {
+        responses: {
+            '200': {
+                description: 'Get Array of TenderProcess model instances',
+                content: {
+                    'application/json': {
+                        schema: { type: 'array', items: rest_1.getModelSchemaRef(tender_array_model_1.TenderArray) },
+                    },
+                },
+            },
+        },
+    }),
+    __param(0, rest_1.requestBody({
+        content: {
+            'application/json': {
+                schema: { type: 'array', items: rest_1.getModelSchemaRef(models_1.TenderProcess, { partial: true }) },
+            },
+        },
+    })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", Promise)
+], TenderProcessController.prototype, "findAllTenderArray", null);
 __decorate([
     rest_1.get('/tender-processes/{id}', {
         responses: {

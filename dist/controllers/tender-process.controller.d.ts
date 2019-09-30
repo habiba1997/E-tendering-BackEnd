@@ -1,6 +1,7 @@
 import { TenderProcess, CompanyUser, AcceptObject } from '../models';
 import { TenderProcessRepository, CompanyUserRepository, HospitalUserRepository } from '../repositories';
 import { CompaniesSubmittedTenderObject } from '../models/obj.model';
+import { TenderProcessArray } from '../models/tender-process-array.model';
 export declare class TenderProcessController {
     hospitalUserRepository: HospitalUserRepository;
     companyUserRepository: CompanyUserRepository;
@@ -12,6 +13,8 @@ export declare class TenderProcessController {
     addTenderToHospitalByUserID(Userid: string, TenderProcessId: string): Promise<void>;
     createTender(tenderProcess: TenderProcess): Promise<TenderProcess>;
     find(): Promise<TenderProcess[]>;
+    tenderss: TenderProcessArray;
+    findAllTenderArray(arr: TenderProcess[]): Promise<TenderProcess[]>;
     findById(id: string): Promise<TenderProcess>;
     updateById(id: string, tenderProcess: TenderProcess): Promise<void>;
     deleteById(id: string): Promise<void>;
