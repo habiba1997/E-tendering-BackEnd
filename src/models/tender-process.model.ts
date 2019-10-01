@@ -78,7 +78,7 @@ export class TenderProcess extends Entity {
     type: 'array',
     itemType: 'object',
   })
-  Submitted?: CompaniesSubmittedTenderObject[];
+  Agreed?: CompaniesSubmittedTenderObject[];
 
   constructor(data?: Partial<TenderProcess>) {
     super(data);

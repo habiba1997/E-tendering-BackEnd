@@ -13,7 +13,7 @@ export declare class TenderProcess extends Entity {
     Open_Process: boolean;
     Companies_Selected: string[];
     Companies_Agreed?: string[];
-    Submitted?: CompaniesSubmittedTenderObject[];
+    Agreed?: CompaniesSubmittedTenderObject[];
     constructor(data?: Partial<TenderProcess>);
 }
 export interface TenderProcessRelations {

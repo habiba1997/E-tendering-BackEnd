@@ -1,6 +1,7 @@
 import { Model } from '@loopback/repository';
 export declare class CompaniesSubmittedTenderObject extends Model {
     companyId: string;
+    companyName?: string;
     tenderingProcessId: string;
     numberOfFits?: number;
     [prop: string]: any;

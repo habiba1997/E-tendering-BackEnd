@@ -98,7 +98,7 @@ __decorate([
         itemType: 'object',
     }),
     __metadata("design:type", Array)
-], TenderProcess.prototype, "Submitted", void 0);
+], TenderProcess.prototype, "Agreed", void 0);
 TenderProcess = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])

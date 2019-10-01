@@ -8,6 +8,11 @@ export class CompaniesSubmittedTenderObject extends Model {
     required: true,
   })  
   companyId: string;
+  
+  @property({
+    type: 'string',
+  })  
+  companyName?: string;
 
   @property({
     type: 'string',

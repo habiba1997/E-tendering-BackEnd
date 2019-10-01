@@ -35,6 +35,20 @@ let TenderProcessController = class TenderProcessController {
         }
         await this.companyUserRepository.updateById(Userid, await user);
     }
+    async addTenderToHospitalByUserID(Userid, TenderProcessId) {
+        let user = this.hospitalUserRepository.findById(Userid);
+        let arr = (await user).TenderingProcessesCreated;
+        if (!(arr == undefined)) {
+            arr.push(TenderProcessId);
+            (await user).TenderingProcessesCreated = arr;
+        }
+        else {
+            var array = [];
+            array.push(TenderProcessId);
+            (await user).TenderingProcessesCreated = array;
+        }
+        await this.hospitalUserRepository.updateById(Userid, await user);
+    }
     async NormaltenderEntered(user, TenderProcessId) {
         let arr = (await user).TenderingProcessesEntered;
         if (!(arr == undefined)) {
@@ -61,20 +75,6 @@ let TenderProcessController = class TenderProcessController {
         }
         return user;
     }
-    async addTenderToHospitalByUserID(Userid, TenderProcessId) {
-        const user = this.hospitalUserRepository.findById(Userid);
-        let arr = (await user).TenderingProcessesCreated;
-        if (!(arr == undefined)) {
-            arr.push(TenderProcessId);
-            (await user).TenderingProcessesCreated = arr;
-        }
-        else {
-            var array = [];
-            array.push(TenderProcessId);
-            (await user).TenderingProcessesCreated = array;
-        }
-        await this.hospitalUserRepository.updateById(Userid, await user);
-    }
     async createTender(tenderProcess) {
         let companies = tenderProcess.Companies_Selected;
         let hospital = this.hospitalUserRepository.findById(tenderProcess.Issued_Hospital_ID);
@@ -94,7 +94,6 @@ let TenderProcessController = class TenderProcessController {
         return this.tenderProcessRepository.find();
     }
     async findAllTenderArray(arr) {
-        //let arrs :TenderProcess[];
         for (var i = 0; i < arr.length; ++i) {
             let tender = await this.tenderProcessRepository.findById(arr[i]._id);
             if (!(tender == undefined)) {
@@ -151,7 +150,7 @@ let TenderProcessController = class TenderProcessController {
     }
     async getAgreedItemNumber(obj) {
         let tender = this.tenderProcessRepository.findById(obj.TenderingProcessId);
-        return (await tender).Submitted;
+        return (await tender).Agreed;
     }
 };
 __decorate([

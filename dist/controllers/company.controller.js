@@ -93,8 +93,9 @@ let CompanyController = class CompanyController {
     }
     async submit(obj) {
         let tender = this.tenderProcessRepository.findById(obj.tenderingProcessId);
-        this.postAcceptance(obj, await tender);
-        let agreed = (await tender).Submitted;
+        var companyName = await this.postAcceptance(obj, await tender);
+        obj.companyName = companyName;
+        let agreed = (await tender).Agreed;
         if (agreed) {
             agreed.push(obj);
         }
@@ -103,7 +104,7 @@ let CompanyController = class CompanyController {
             arr.push(obj);
             agreed = arr;
         }
-        (await tender).Submitted = agreed;
+        (await tender).Agreed = agreed;
         this.tenderProcessRepository.updateById(obj.tenderingProcessId, await tender);
     }
     async postAcceptance(obj, tender) {
@@ -119,10 +120,14 @@ let CompanyController = class CompanyController {
             (await tender).Companies_Agreed = array;
         }
         this.tenderProcessRepository.updateById(obj.tenderingProcessId, await tender);
-        if ((await tender).Direct_Process)
-            this.directUpdateCompanyWithAcceptedTenderProcess(obj);
-        else
-            this.updateCompanyWithAcceptedTenderProcess(obj);
+        let companyName;
+        if ((await tender).Direct_Process) {
+            companyName = this.directUpdateCompanyWithAcceptedTenderProcess(obj);
+        }
+        else {
+            companyName = this.updateCompanyWithAcceptedTenderProcess(obj);
+        }
+        return companyName;
     }
     remove(array, removedObject) {
         var pos = array.indexOf(removedObject);
@@ -131,32 +136,34 @@ let CompanyController = class CompanyController {
         return array;
     }
     async updateCompanyWithAcceptedTenderProcess(obj) {
-        const user = this.userRepository.findById(obj.companyId);
-        var arr = (await user).TenderingProcessesAccepted;
+        const user = await this.userRepository.findById(obj.companyId);
+        var arr = (user).TenderingProcessesAccepted;
         if (!(arr == undefined)) {
             arr.push(obj.tenderingProcessId);
-            (await user).TenderingProcessesAccepted = arr;
+            (user).TenderingProcessesAccepted = arr;
         }
         else {
             var array = [];
             array.push(obj.tenderingProcessId);
-            (await user).TenderingProcessesAccepted = array;
+            (user).TenderingProcessesAccepted = array;
         }
         this.deleteTenderIdFromEnteredArray(await user, obj);
+        return user.name;
     }
     async directUpdateCompanyWithAcceptedTenderProcess(obj) {
-        const user = this.userRepository.findById(obj.companyId);
-        var arr = (await user).specificTenderingProcessesAccepted;
+        const user = await this.userRepository.findById(obj.companyId);
+        var arr = (user).specificTenderingProcessesAccepted;
         if (!(arr == undefined)) {
             arr.push(obj.tenderingProcessId);
-            (await user).specificTenderingProcessesAccepted = arr;
+            (user).specificTenderingProcessesAccepted = arr;
         }
         else {
             var array = [];
             array.push(obj.tenderingProcessId);
-            (await user).specificTenderingProcessesAccepted = array;
+            (user).specificTenderingProcessesAccepted = array;
         }
         this.deleteTenderIdFromSpecificEnteredArray(await user, obj);
+        return user.name;
     }
     async deleteTenderIdFromEnteredArray(user, obj) {
         let arr = (await user).TenderingProcessesEntered;

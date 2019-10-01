@@ -25,6 +25,12 @@ __decorate([
 __decorate([
     repository_1.property({
         type: 'string',
+    }),
+    __metadata("design:type", String)
+], CompaniesSubmittedTenderObject.prototype, "companyName", void 0);
+__decorate([
+    repository_1.property({
+        type: 'string',
         required: true,
     }),
     __metadata("design:type", String)

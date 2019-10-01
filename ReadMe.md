@@ -4,6 +4,10 @@ npm install isemail
 npm i bcryptjs
 npm install jsonwebtoken
 
+npm i nodemailer
+npm i nodemailer-mailgun-transport
+
+
 # Install node.js Using Ubuntu
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs

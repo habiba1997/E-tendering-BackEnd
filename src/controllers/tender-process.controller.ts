@@ -47,6 +47,26 @@ async addTenderToCompanyByUserID(direct:boolean ,Userid: string, TenderProcessId
 }
 
 
+async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
+  
+  let user = this.hospitalUserRepository.findById(Userid);
+
+  let arr = (await user).TenderingProcessesCreated;
+
+  if(!(arr==undefined)) 
+  {
+    arr.push(TenderProcessId);
+    (await user).TenderingProcessesCreated = arr;
+  }
+  else 
+  {
+    var array =[];
+    array.push(TenderProcessId);
+    (await user).TenderingProcessesCreated = array;
+  }
+  await this.hospitalUserRepository.updateById(Userid, await user);
+}
+
 async NormaltenderEntered(user:CompanyUser,TenderProcessId:string):Promise<CompanyUser>
 {
   let arr = (await user).TenderingProcessesEntered;
@@ -82,25 +102,6 @@ async SpecifictenderEntered(user:CompanyUser,TenderProcessId:string):Promise<Com
   }
   return user;
 }
-async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
-  
-    const user = this.hospitalUserRepository.findById(Userid);
-  
-    let arr = (await user).TenderingProcessesCreated;
-  
-    if(!(arr==undefined)) 
-    {
-      arr.push(TenderProcessId);
-      (await user).TenderingProcessesCreated = arr;
-    }
-    else 
-    {
-      var array =[];
-      array.push(TenderProcessId);
-      (await user).TenderingProcessesCreated = array;
-    }
-    await this.hospitalUserRepository.updateById(Userid, await user);
-  }
 
 
 
@@ -193,9 +194,7 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
             
               arr[i]= tender;
         }
-  
       }
-
         return  arr;
   }
 
@@ -300,7 +299,7 @@ async addTenderToHospitalByUserID(Userid: string, TenderProcessId:string) {
   ): Promise<CompaniesSubmittedTenderObject[] | undefined> {
     let tender =  this.tenderProcessRepository.findById(obj.TenderingProcessId);
 
-    return (await tender).Submitted;
+    return (await tender).Agreed;
   }
 
 

@@ -7,4 +7,5 @@ __export(require("./hospital-user.controller"));
 __export(require("./company.controller"));
 __export(require("./user.controller"));
 __export(require("./tender-process.controller"));
+__export(require("./email.controller"));
 //# sourceMappingURL=index.js.map

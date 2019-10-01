@@ -8,9 +8,9 @@ export declare class TenderProcessController {
     tenderProcessRepository: TenderProcessRepository;
     constructor(hospitalUserRepository: HospitalUserRepository, companyUserRepository: CompanyUserRepository, tenderProcessRepository: TenderProcessRepository);
     addTenderToCompanyByUserID(direct: boolean, Userid: string, TenderProcessId: string): Promise<void>;
+    addTenderToHospitalByUserID(Userid: string, TenderProcessId: string): Promise<void>;
     NormaltenderEntered(user: CompanyUser, TenderProcessId: string): Promise<CompanyUser>;
     SpecifictenderEntered(user: CompanyUser, TenderProcessId: string): Promise<CompanyUser>;
-    addTenderToHospitalByUserID(Userid: string, TenderProcessId: string): Promise<void>;
     createTender(tenderProcess: TenderProcess): Promise<TenderProcess>;
     find(): Promise<TenderProcess[]>;
     tenderss: TenderProcessArray;

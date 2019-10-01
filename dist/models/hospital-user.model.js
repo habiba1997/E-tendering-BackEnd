@@ -47,13 +47,7 @@ __decorate([
     repository_1.property({
         type: 'array',
         itemType: 'string',
-    }),
-    __metadata("design:type", Array)
-], HospitalUser.prototype, "DevicesToProvide", void 0);
-__decorate([
-    repository_1.property({
-        type: 'array',
-        itemType: 'string',
+        default: null,
     }),
     __metadata("design:type", Array)
 ], HospitalUser.prototype, "TenderingProcessesCreated", void 0);
