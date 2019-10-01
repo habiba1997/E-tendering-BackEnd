@@ -19,13 +19,13 @@ class EmailController {
     async sendMail(userEmail) {
         const auth = {
             auth: {
-                api_key: '41f135d37ab1d57cda971d2098cf6cc2-19f318b0-ace2f0d3',
-                domain: 'sandbox73d0a061cbb649398a867d25f43fa3e7.mailgun.org'
+                api_key: '3cec832c45b1c35bd9fb1b42a4f8a4ee-af6c0cec-5194ab9b',
+                domain: 'sandbox07ab5c3c39014eee89cac7d780175217.mailgun.org'
             }
         };
         let transporter = nodemailer.createTransport(nodemailerMailGun(auth));
         const mailOptions = {
-            from: 'Meet <meet@etendering.mailgun.org>',
+            from: 'Meet <MEET@E-Tendering.mail.org>',
             to: userEmail,
             subject: "Testmail",
             html: '<p>This is a mail</p>'

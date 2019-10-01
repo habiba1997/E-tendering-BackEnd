@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const repository_1 = require("@loopback/repository");
-const diathermy_model_1 = require("./diathermy.model");
 let TenderProcess = class TenderProcess extends repository_1.Entity {
     constructor(data) {
         super(data);
@@ -48,7 +47,7 @@ __decorate([
         type: 'object',
         required: true,
     }),
-    __metadata("design:type", diathermy_model_1.Diathermy)
+    __metadata("design:type", Object)
 ], TenderProcess.prototype, "Device_Data", void 0);
 __decorate([
     repository_1.property({

@@ -10,4 +10,5 @@ __export(require("./tenderAcceptance.model"));
 __export(require("./diathermy.model"));
 __export(require("./tender-array.model"));
 __export(require("./tender-process-array.model"));
+__export(require("./ultrasound.model"));
 //# sourceMappingURL=index.js.map

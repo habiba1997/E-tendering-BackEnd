@@ -1,6 +1,7 @@
 import {Entity, model, property} from '@loopback/repository';
 import { CompaniesSubmittedTenderObject } from './obj.model';
 import { Diathermy } from './diathermy.model';
+import { Ultrasound } from './ultrasound.model';
 
 @model({settings: {strict: false}})
 export class TenderProcess extends Entity {
@@ -33,7 +34,7 @@ export class TenderProcess extends Entity {
     type: 'object',
     required: true,
   })
-  Device_Data: Diathermy;
+  Device_Data: Diathermy | Ultrasound;
   
   @property({
     type: 'string',

@@ -110,7 +110,33 @@ company-submit Request Body:
 
 }
 
+{
 
+  "Issued_Hospital_ID": "5d83ecbe91fed14ee103b3ab",
+  "Device_Name": "diathermy",
+  "Device_Data": {	
+        "countryOfOrigin":"London",
+        "PhysicalandErgonomicFeatures" :["Room based wheeled unit"],
+        "ScanModes": ["Spatial Image Compounding"],
+        "probs" : "Convex",
+        "FDACertified":true
+},
+  "startDate": "2019-09-24",
+  "deadlineDate": "2019-09-24",
+ "Direct_Process": true,
+  "Open_Process": false,
+  "Companies_Selected": [
+    "5d81e9dbb635331fb81d1dec"
+  ]
+
+
+}
+
+"countryOfOrigin":"string",
+"PhysicalandErgonomicFeatures" :[],
+"ScanModes": [],
+"probs" : "string",
+"FDACertified":boolean
 
 
 Object Tender Device_Data

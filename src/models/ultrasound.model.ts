@@ -1,9 +1,7 @@
 import {Model, model, property} from '@loopback/repository';
 
 @model({settings: {strict: false}})
-
-
-export class Diathermy extends Model {
+export class Ultrasound extends Model {
   @property({
     type: 'string',
     required: true,
@@ -11,35 +9,24 @@ export class Diathermy extends Model {
   countryOfOrigin: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  polarity: string;
+  PhysicalandErgonomicFeatures: string[];
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    required: true,
+  })
+  ScanModes: string[];
 
   @property({
     type: 'string',
     required: true,
-    default: "Open",
   })
-  compatibility: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  alarm: string;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  powerRange: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  CogPowerRange: number;
+  probs: string;
 
   @property({
     type: 'boolean',
@@ -53,13 +40,13 @@ export class Diathermy extends Model {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
-  constructor(data?: Partial<Diathermy>) {
+  constructor(data?: Partial<Ultrasound>) {
     super(data);
   }
 }
 
-export interface DiathermyRelations {
+export interface UltrasoundRelations {
   // describe navigational properties here
 }
 
-export type DiathermyWithRelations = Diathermy & DiathermyRelations;
+export type UltrasoundWithRelations = Ultrasound & UltrasoundRelations;
