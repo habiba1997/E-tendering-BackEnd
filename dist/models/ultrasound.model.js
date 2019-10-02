@@ -51,7 +51,7 @@ __decorate([
         required: true,
     }),
     __metadata("design:type", Boolean)
-], Ultrasound.prototype, "FDA", void 0);
+], Ultrasound.prototype, "FDACertified", void 0);
 Ultrasound = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])

@@ -4,7 +4,7 @@ export declare class Ultrasound extends Model {
     PhysicalandErgonomicFeatures: string[];
     ScanModes: string[];
     probs: string;
-    FDA: boolean;
+    FDACertified: boolean;
     [prop: string]: any;
     constructor(data?: Partial<Ultrasound>);
 }

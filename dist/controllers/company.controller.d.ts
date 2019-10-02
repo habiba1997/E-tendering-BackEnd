@@ -21,11 +21,11 @@ export declare class CompanyController {
     updateById(id: string, companyUser: CompanyUser): Promise<void>;
     findService(): Promise<CompanyUser[]>;
     postReject(obj: CompaniesSubmittedTenderObject): Promise<void>;
-    submit(obj: CompaniesSubmittedTenderObject): Promise<void>;
-    postAcceptance(obj: CompaniesSubmittedTenderObject, tender: TenderProcess): Promise<string>;
+    submit(obj: CompaniesSubmittedTenderObject): Promise<TenderProcess>;
+    postAcceptance(user: CompanyUser, obj: CompaniesSubmittedTenderObject, tender: TenderProcess): Promise<string>;
     remove(array: string[], removedObject: string): string[];
-    updateCompanyWithAcceptedTenderProcess(obj: CompaniesSubmittedTenderObject): Promise<string>;
-    directUpdateCompanyWithAcceptedTenderProcess(obj: CompaniesSubmittedTenderObject): Promise<string>;
+    updateCompanyWithAcceptedTenderProcess(user: CompanyUser, obj: CompaniesSubmittedTenderObject): Promise<string>;
+    directUpdateCompanyWithAcceptedTenderProcess(user: CompanyUser, obj: CompaniesSubmittedTenderObject): Promise<string>;
     deleteTenderIdFromEnteredArray(user: CompanyUser, obj: CompaniesSubmittedTenderObject): Promise<void>;
     deleteTenderIdFromSpecificEnteredArray(user: CompanyUser, obj: CompaniesSubmittedTenderObject): Promise<void>;
 }

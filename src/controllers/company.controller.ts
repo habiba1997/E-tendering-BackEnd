@@ -247,15 +247,34 @@ export class CompanyController  {
     },
   })
   obj: CompaniesSubmittedTenderObject,
-  ): Promise<void> {
-    let tender = this.tenderProcessRepository.findById(obj.tenderingProcessId);
+  ): Promise<TenderProcess > {
+
+
+
+    const user = await this.userRepository.findById(obj.companyId);
+
+    let tender = await this.tenderProcessRepository.findById(obj.tenderingProcessId);
+
+    let array = tender.Agreed;
+    if (array)
+    {
+       array.forEach(element => {
+        if (element.companyId == user._id)
+        {
+          throw new HttpErrors.Conflict("Can't Add What Already Exist");
+        }
+
+    });
     
-    var companyName = await this.postAcceptance(obj,await tender);
+    }
+   
+    
+    var companyName = await this.postAcceptance(user,obj,tender);
 
-
+    obj.winner = false;
     obj.companyName = companyName;
 
-    let agreed = (await tender).Agreed;
+    let agreed = tender.Agreed;
     if(agreed)
     {
       agreed.push(obj);
@@ -266,15 +285,17 @@ export class CompanyController  {
       arr.push(obj);
       agreed = arr;
     }
-    (await tender).Agreed= agreed;
-    this.tenderProcessRepository.updateById(obj.tenderingProcessId, await tender);
+    tender.Agreed= agreed;    
+    
+    this.tenderProcessRepository.updateById(obj.tenderingProcessId, tender);
+    return this.tenderProcessRepository.findById(obj.tenderingProcessId);
 
   }
 
 
 
 
-  async postAcceptance(obj:CompaniesSubmittedTenderObject, tender:TenderProcess ): Promise<string> {
+  async postAcceptance(user: CompanyUser,obj:CompaniesSubmittedTenderObject, tender:TenderProcess ): Promise<string> {
     //update tender process with accepted company Id
     var arr = (await tender).Companies_Agreed;
     if(!(arr==undefined)) 
@@ -293,13 +314,13 @@ export class CompanyController  {
 
     if((await tender).Direct_Process) 
     {
-      companyName =this.directUpdateCompanyWithAcceptedTenderProcess(obj);
+      companyName =this.directUpdateCompanyWithAcceptedTenderProcess(user, obj);
     
     }
 
     else 
     {
-      companyName = this.updateCompanyWithAcceptedTenderProcess(obj);
+      companyName = this.updateCompanyWithAcceptedTenderProcess(user, obj);
     }
     
     return companyName;
@@ -314,9 +335,8 @@ export class CompanyController  {
     return array;
   }
 
-  async updateCompanyWithAcceptedTenderProcess(obj:CompaniesSubmittedTenderObject)
+  async updateCompanyWithAcceptedTenderProcess(user: CompanyUser, obj:CompaniesSubmittedTenderObject)
     {
-        const user = await this.userRepository.findById(obj.companyId);
         var arr = ( user).TenderingProcessesAccepted;
         if(!(arr==undefined)) 
         {
@@ -328,13 +348,12 @@ export class CompanyController  {
           array.push(obj.tenderingProcessId);
           ( user).TenderingProcessesAccepted = array;
         }
-        this.deleteTenderIdFromEnteredArray(await user,obj);
+        this.deleteTenderIdFromEnteredArray(user,obj);
         return user.name;
 
     } 
-    async directUpdateCompanyWithAcceptedTenderProcess(obj:CompaniesSubmittedTenderObject)
+    async directUpdateCompanyWithAcceptedTenderProcess(user: CompanyUser,obj:CompaniesSubmittedTenderObject)
     {
-        const user = await this.userRepository.findById(obj.companyId);
         var arr = (user).specificTenderingProcessesAccepted;
         if(!(arr==undefined)) 
         {
@@ -346,13 +365,13 @@ export class CompanyController  {
           array.push(obj.tenderingProcessId);
           (user).specificTenderingProcessesAccepted = array;
         }
-        this.deleteTenderIdFromSpecificEnteredArray(await user,obj)
+        this.deleteTenderIdFromSpecificEnteredArray(user,obj)
         return user.name;
     } 
  
   async deleteTenderIdFromEnteredArray(user: CompanyUser,obj:CompaniesSubmittedTenderObject)
   {
-      let arr = (await user).TenderingProcessesEntered
+      let arr = user.TenderingProcessesEntered
       if(!(arr==undefined))  arr = this.remove(arr,obj.tenderingProcessId);
       else  throw new HttpErrors.Conflict('delete problem');
 

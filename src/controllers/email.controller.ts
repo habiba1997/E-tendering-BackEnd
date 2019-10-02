@@ -1,4 +1,4 @@
-import { post, param } from '@loopback/rest';
+import { post, param, get } from '@loopback/rest';
 const nodemailer = require('nodemailer');
 const nodemailerMailGun = require('nodemailer-mailgun-transport');
 
@@ -13,7 +13,8 @@ export class EmailController {
       },
     },
   })
-  async sendMail(@param.path.string('userEmail') userEmail: string) {
+  async sendMail(@param.path.string('userEmail') userEmail: string
+  ) {
     const auth = {
       auth: {
         api_key: '3cec832c45b1c35bd9fb1b42a4f8a4ee-af6c0cec-5194ab9b',
@@ -25,8 +26,8 @@ export class EmailController {
     const mailOptions = {
       from: 'Meet <MEET@E-Tendering.mail.org>',
       to: userEmail,
-      subject: "Testmail",
-      html: '<p>This is a mail</p>'
+      subject: "MEET Sybmission Results",
+      html: '<h1>You have Won the Tender Process With Id:  </h1>'
 
     }
 

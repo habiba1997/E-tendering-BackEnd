@@ -38,10 +38,16 @@ __decorate([
 __decorate([
     repository_1.property({
         type: 'number',
-        required: true,
     }),
     __metadata("design:type", Number)
 ], CompaniesSubmittedTenderObject.prototype, "numberOfFits", void 0);
+__decorate([
+    repository_1.property({
+        type: 'boolean',
+        default: false,
+    }),
+    __metadata("design:type", Boolean)
+], CompaniesSubmittedTenderObject.prototype, "winner", void 0);
 CompaniesSubmittedTenderObject = __decorate([
     repository_1.model({ settings: { strict: false } }),
     __metadata("design:paramtypes", [Object])

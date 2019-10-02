@@ -29,24 +29,31 @@ export class CompanyUser extends Entity {
   @property({
     type: 'array',
     itemType: 'string',
+    default: null,
   })
   specificTenderingProcessesEntered?: string[];
   
   @property({
     type: 'array',
     itemType: 'string',
+    default: null,
+
   })
   TenderingProcessesEntered?: string[];
 
   @property({
     type: 'array',
     itemType: 'string',
+    default: null,
+
   })
   specificTenderingProcessesAccepted?: string[];
   
   @property({
     type: 'array',
     itemType: 'string',
+    default: null,
+
   })
   TenderingProcessesAccepted?: string[];
 

@@ -4,6 +4,7 @@ export declare class CompaniesSubmittedTenderObject extends Model {
     companyName?: string;
     tenderingProcessId: string;
     numberOfFits?: number;
+    winner?: boolean;
     [prop: string]: any;
     constructor(data?: Partial<CompaniesSubmittedTenderObject>);
 }

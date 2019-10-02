@@ -22,9 +22,14 @@ export class CompaniesSubmittedTenderObject extends Model {
 
   @property({
     type: 'number',
-    required: true,
   })  
   numberOfFits?: number;
+
+  @property({
+    type: 'boolean',
+    default: false,
+  })
+  winner?: boolean;
 
   [prop: string]: any;
 

@@ -27,8 +27,8 @@ class EmailController {
         const mailOptions = {
             from: 'Meet <MEET@E-Tendering.mail.org>',
             to: userEmail,
-            subject: "Testmail",
-            html: '<p>This is a mail</p>'
+            subject: "MEET Sybmission Results",
+            html: '<h1>You have Won the Tender Process With Id:  </h1>'
         };
         transporter.sendMail(mailOptions, function (err, data) {
             if (err) {
