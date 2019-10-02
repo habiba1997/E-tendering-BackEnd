@@ -47,6 +47,7 @@ __decorate([
     repository_1.property({
         type: 'array',
         itemType: 'string',
+        default: null,
     }),
     __metadata("design:type", Array)
 ], CompanyUser.prototype, "specificTenderingProcessesEntered", void 0);
@@ -54,6 +55,7 @@ __decorate([
     repository_1.property({
         type: 'array',
         itemType: 'string',
+        default: null,
     }),
     __metadata("design:type", Array)
 ], CompanyUser.prototype, "TenderingProcessesEntered", void 0);
@@ -61,6 +63,7 @@ __decorate([
     repository_1.property({
         type: 'array',
         itemType: 'string',
+        default: null,
     }),
     __metadata("design:type", Array)
 ], CompanyUser.prototype, "specificTenderingProcessesAccepted", void 0);
@@ -68,6 +71,7 @@ __decorate([
     repository_1.property({
         type: 'array',
         itemType: 'string',
+        default: null,
     }),
     __metadata("design:type", Array)
 ], CompanyUser.prototype, "TenderingProcessesAccepted", void 0);

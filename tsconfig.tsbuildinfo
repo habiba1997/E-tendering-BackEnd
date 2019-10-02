@@ -1282,7 +1282,7 @@
         "signature": "f0f031d286b5cb502cb2fd3c19b923cfddbcd62fc4a56e593891ed289d034e9a"
       },
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/company-user.model.ts": {
-        "version": "d630f28b38f81852aab118c86e46a38b03e1baedf5a3eb8eefbc69df3337a950",
+        "version": "c8676a891b1ae8f99f6d2a00a90ac623d9e3f305d91e963b7c729ec1f1c24de3",
         "signature": "4997942b37ff975ca28dc338e489510f33ce93c3b7bbb727fe910ce820af9f75"
       },
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/obj.model.ts": {
@@ -1473,7 +1473,7 @@
         "signature": "684fcaf48f31d8e10a110a5b9c0c38b4469038f077cec17001e7176a63588544"
       },
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/email.controller.ts": {
-        "version": "900a60342f0f3c8f372da99299d182a74f2614e2a9b574f9f06e4687cd75e31b",
+        "version": "ab05dc21b72aa53f55e92e976ddf1171a0619a33bddf5e2870c484e6a50ba32a",
         "signature": "698e45ce3ddff2b08138c9b311601feac9130c0c3176cdc52767bdb813794ec9"
       },
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/hospital-user.controller.ts": {
@@ -6834,7 +6834,6 @@
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/bcryptjs/index.d.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/services/hash.password.bcryptjs.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/hospital-user.model.ts",
-      "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/company-user.model.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/obj.model.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/diathermy.model.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/ultrasound.model.ts",
@@ -6882,7 +6881,6 @@
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/isemail/lib/index.d.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/services/validator.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/company.controller.ts",
-      "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/email.controller.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/hospital-user.controller.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/specs/user-controller.specs.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/user.controller.ts",
@@ -6895,7 +6893,9 @@
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/glob/index.d.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/mocha/index.d.ts",
       "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/on-finished/index.d.ts",
-      "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/type-is/index.d.ts"
+      "/home/habiba/E-tendering/e-tenderingBackEnd/node_modules/@types/type-is/index.d.ts",
+      "/home/habiba/E-tendering/e-tenderingBackEnd/src/models/company-user.model.ts",
+      "/home/habiba/E-tendering/e-tenderingBackEnd/src/controllers/email.controller.ts"
     ]
   },
   "version": "3.5.3"
