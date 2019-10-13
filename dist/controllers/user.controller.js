@@ -55,6 +55,12 @@ let UserController = class UserController {
             this.hospitalUserRepository.deleteById(hospUser._id);
         });
     }
+    async deleteTenders() {
+        let tenders = this.tenderProcessRepository.find();
+        (await tenders).forEach(tender => {
+            this.tenderProcessRepository.deleteById(tender._id);
+        });
+    }
 };
 __decorate([
     rest_1.get('/users/me', {
@@ -112,6 +118,18 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "delete", null);
+__decorate([
+    rest_1.del('/tenders', {
+        responses: {
+            '204': {
+                description: 'DELETE success',
+            },
+        },
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "deleteTenders", null);
 UserController = __decorate([
     __param(0, core_1.inject(keys_1.TokenServiceBindings.TOKEN_SERVICE)),
     __param(1, core_1.inject(keys_1.UserServiceBindings.USER_SERVICE)),

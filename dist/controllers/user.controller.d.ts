@@ -15,4 +15,5 @@ export declare class UserController {
         token: string;
     }>;
     delete(): Promise<void>;
+    deleteTenders(): Promise<void>;
 }

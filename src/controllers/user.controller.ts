@@ -142,6 +142,27 @@ import {
 
 
     }
+
+
+
+
+    @del('/tenders', {
+      responses: {
+        '204': {
+          description: 'DELETE success',
+        },
+      },
+    })
+    async deleteTenders(): Promise<void> {
+      
+      let tenders = this.tenderProcessRepository.find();
+      (await tenders).forEach(tender => {
+        this.tenderProcessRepository.deleteById(tender._id);
+        
+      });
+
+    }
+
   
   
   }
