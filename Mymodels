@@ -1,0 +1,47 @@
+ CompanyUser:
+
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  specificTenderingProcessesEntered?: string[];
+  TenderingProcessesEntered?: string[];
+  specificTenderingProcessesAccepted?: string[];
+  TenderingProcessesAccepted?: string[];
+
+
+HospitalUser
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  TenderingProcessesCreated: string[];
+
+
+
+ TenderProcess 
+  _id?: string;
+  Issued_Hospital_ID: string;
+  Hospital_Name: string;
+  Device_Name: string;
+  Device_Data: Diathermy | Ultrasound;
+  startDate: string;
+  deadlineDate: string;
+  Direct_Process: boolean;
+  Open_Process: boolean;
+  Companies_Selected: string[];
+  Companies_Agreed?: string[];
+  Agreed?: CompaniesSubmittedTenderObject[];
+
+
+
+
+CompaniesSubmittedTenderObject
+  
+  companyId: string;
+  companyName: string;
+  tenderingProcessId: string;
+  numberOfFits: number;
+  winner: boolean;
+
+
