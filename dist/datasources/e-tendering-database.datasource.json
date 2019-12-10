@@ -1,12 +1,11 @@
 {
-    "name": "eTenderingDatabase",
+    "name": "mongodb",
     "connector": "mongodb",
-    "url": "",
-    "host": "localhost",
-    "port": 0,
-    "user": "",
-    "password": "",
+    "url": "mongodb://user:beebz1997@cluster20-shard-00-00-jodsn.mongodb.net:27017,cluster20-shard-00-01-jodsn.mongodb.net:27017,cluster20-shard-00-02-jodsn.mongodb.net:27017/test?ssl=true&replicaSet=Cluster20-shard-0&authSource=admin&retryWrites=true&w=majority",
+    "host": "cluster20-shard-00-00-jodsn.mongodb.net",
+    "port": 27017,
+    "user": "user",
+    "password": "beebz1997",
     "database": "eTenderingDatabase",
-    "useNewUrlParser": true,
-    "useUnifiedTopology": true
+    "useNewUrlParser": false
 }
